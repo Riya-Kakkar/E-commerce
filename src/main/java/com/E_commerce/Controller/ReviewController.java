@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//localhost:9090/e-commerce/reviews
 
 @RestController
 @RequestMapping("/e-commerce/reviews")

@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.Map;
+
+//localhost:9090/e-commerce/admin
 
 @RestController
 @RequestMapping("/e-commerce/admin")
@@ -25,5 +28,11 @@ public class AdminController {
       System.out.println("Welcome Admin!" +principal.getName());
       return ResponseEntity.ok("Welcome Admin!" +principal.getName());
   }
+
+    @GetMapping("/stats")
+    public ResponseEntity<Map<String, Object>> getDashboardStats() {
+        Map<String, Object> stats = adminDashboardService.getDashboardStats();
+        return ResponseEntity.ok(stats);
+    }
 
 }

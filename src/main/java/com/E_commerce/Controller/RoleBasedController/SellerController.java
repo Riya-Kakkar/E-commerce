@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
+//localhost:9090/e-commerce/products/sellers
+
 @RestController
 @RequestMapping("/e-commerce/products/sellers")
 public class SellerController {
