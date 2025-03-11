@@ -1,0 +1,50 @@
+package com.E_commerce.Controller.RoleBasedController;
+
+import com.E_commerce.Entity.Product;
+import com.E_commerce.Service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/e-commerce/products/customers")
+public class CustomerController {
+
+    @Autowired
+    private ProductService productService;
+
+    @GetMapping("/profile")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<String> getCustomerProfile(Principal principal) {
+        System.out.println("Welcome Customer!" +principal.getName());
+        return ResponseEntity.ok("Welcome Customer!"  +principal.getName());
+    }
+
+    @GetMapping("/getProduct/{id}")
+    public ResponseEntity<Optional<Product>> getProductById(@PathVariable int id) {
+        System.out.println("Get Product by its Id - " +id);
+        return ResponseEntity.ok(productService.getProductById(id));
+    }
+
+    @GetMapping("/getAllProducts")
+    public ResponseEntity<Page<Product>> getAllProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) Long minPrice,
+            @RequestParam(required = false) Long maxPrice,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String category) {
+
+        System.out.println("List of all products are - ");
+        Page<Product> products = productService.getAllProducts(page, size, minPrice, maxPrice, name, category);
+        return ResponseEntity.ok(products);
+    }
+
+
+}
