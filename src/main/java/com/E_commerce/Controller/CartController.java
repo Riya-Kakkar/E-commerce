@@ -63,7 +63,7 @@ public class CartController {
 
     // Remove from cart
     @DeleteMapping("/remove")
-    public ResponseEntity<String> removeFromCart(@RequestParam int userId, @RequestParam int productId , HttpSession session) {
+    public ResponseEntity<String> removeFromCart(@RequestParam int userId, @RequestParam int productId ) {
         User user = userService.getUserById(userId).orElse(null);
         Product product = productService.getProductById(productId).orElse(null);
         if (user != null && product != null) {

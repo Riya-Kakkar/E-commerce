@@ -27,11 +27,6 @@ public class CustomerController {
         return ResponseEntity.ok("Welcome Customer!"  +principal.getName());
     }
 
-    @GetMapping("/getProduct/{id}")
-    public ResponseEntity<Optional<Product>> getProductById(@PathVariable int id) {
-        System.out.println("Get Product by its Id - " +id);
-        return ResponseEntity.ok(productService.getProductById(id));
-    }
 
     @GetMapping("/getAllProducts")
     public ResponseEntity<Page<Product>> getAllProducts(

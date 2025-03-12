@@ -60,18 +60,18 @@ public class UserController {
 
     //get user profile
     @GetMapping("/profile")
-    public ResponseEntity<String> getProfile(Authentication authentication) {
+    public ResponseEntity<User> getProfile(Authentication authentication) {
         String currentUsername = authentication.getName();
         User user = userService.getUserByUsername(currentUsername);
-        return ResponseEntity.ok("User: " +user);
+        return ResponseEntity.ok(user);
     }
 
     // changing user password
     @PostMapping("/change-password")
     public ResponseEntity<String> changePassword(@RequestParam String newPassword , Authentication authentication) {
         String currentUsername = authentication.getName();
-        userService.changePassword(currentUsername, newPassword);
-        return ResponseEntity.ok("Password updated successfully.");
+        String userChanged = userService.changePassword(currentUsername, newPassword);
+        return ResponseEntity.ok("Password updated successfully for :- " +userChanged);
     }
 
     //updating user profile

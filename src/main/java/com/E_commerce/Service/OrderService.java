@@ -80,10 +80,8 @@ public class OrderService {
     public boolean checkIfUserHasPurchasedProduct(User user, Product product) {
         List<Order> orders = orderRepository.findByUser(user);
 
-
         for (Order order : orders) {
             for (OrderItem item : order.getOrderItems()) {
-
                 if (item.getProduct().getId() == product.getId()) {
                     return true;
                 }

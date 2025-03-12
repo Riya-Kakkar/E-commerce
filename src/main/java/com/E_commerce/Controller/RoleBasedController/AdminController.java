@@ -34,5 +34,4 @@ public class AdminController {
         Map<String, Object> stats = adminDashboardService.getDashboardStats();
         return ResponseEntity.ok(stats);
     }
-
 }

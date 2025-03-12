@@ -41,7 +41,6 @@ public class ReviewController {
 
             Review review = reviewService.addReview(user, product, rating, comment);
             return  ResponseEntity.ok(review) ;
-
         } catch (Exception e) {
             System.err.println("Error adding review: " + e.getMessage());
             return ResponseEntity.badRequest().body(null);
@@ -88,5 +87,4 @@ public class ReviewController {
         double averageRating = reviewService.calculateAverageRating(product);
         return ResponseEntity.ok(averageRating);
     }
-
 }

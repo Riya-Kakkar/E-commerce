@@ -29,15 +29,14 @@ public class ReviewService {
         boolean hasPurchased = orderService.checkIfUserHasPurchasedProduct(user, product);
         if (!hasPurchased) {
             throw new IllegalStateException("User must purchase the product before reviewing.");
-
         }
+
         List<Review> existingReviews = reviewRepository.findByUserIdAndProductId(user.getId(), product.getId());
         if (existingReviews.isEmpty()) {
             throw new IllegalStateException("User has already reviewed this product.");
         }
         Review review = new Review(user, product, rating, comment);
         return reviewRepository.save(review);
-
     }
 
     // all reviews product
@@ -75,5 +74,4 @@ public class ReviewService {
         }
         return null;
     }
-
 }

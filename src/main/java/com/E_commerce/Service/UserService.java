@@ -65,8 +65,8 @@ public class UserService {
 
             userRepository.save(user);
 
-            System.out.println("User registered Successfully!. Please check your email for verification.");
-            return ResponseEntity.status(201).body("User registered Successfully!. Please check your email for verification.");
+            System.out.println("User registered Successfully!. Add more....");
+            return ResponseEntity.status(201).body("User registered Successfully!. Add more....");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error during user registration.");
@@ -102,10 +102,11 @@ public class UserService {
         return userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public void changePassword(String username, String newPassword) {
+    public String changePassword(String username, String newPassword) {
         User user = getUserByUsername(username);
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
+        return  username;
     }
 
     public void updateProfile(String username, User updatedUser) {

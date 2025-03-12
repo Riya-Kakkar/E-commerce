@@ -61,7 +61,7 @@ public class SellerController {
     }
 
     //  create a new product
-    @PostMapping("/createProduct")
+    @PostMapping("/create")
     public ResponseEntity<String> createProduct(@RequestBody Product product, @RequestParam String username) throws Exception {
         System.out.println("Adding new product with details: ");
         Product createdProduct = productService.createProduct(product, username);
@@ -70,7 +70,7 @@ public class SellerController {
     }
 
     //  update an existing product
-    @PutMapping("/updateProduct/{productId}")
+    @PutMapping("/update/{productId}")
     public ResponseEntity<String > updateProduct(
             @PathVariable int productId,
             @RequestBody Product productDetails,
@@ -82,7 +82,7 @@ public class SellerController {
     }
 
     //  to delete a product
-    @DeleteMapping("/deleteProduct/{productId}")
+    @DeleteMapping("/delete/{productId}")
     public ResponseEntity<String> deleteProduct(@PathVariable int productId, @RequestParam String username) throws Exception {
         productService.deleteProduct(productId, username);
         System.out.println("Your Product is Deleted...");

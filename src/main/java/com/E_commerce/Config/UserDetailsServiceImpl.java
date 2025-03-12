@@ -38,8 +38,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = byUsername.get();
         CustomUserDetails customUserDetails = new CustomUserDetails(user);
         System.out.println("Loaded user: " + user.getUsername() + " with role: " + user.getRole() + " having authorities: " + customUserDetails.getAuthorities());
-        System.out.println(user);
-        System.out.println(customUserDetails);
         return new CustomUserDetails(user);
 
     }

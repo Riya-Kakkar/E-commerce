@@ -49,6 +49,7 @@ public class MyConfig {
                         .requestMatchers("/e-commerce/reviews/product/**", "/e-commerce/reviews/average/**").permitAll()
 
                         // Authenticated Endpoints
+                        .requestMatchers("/e-commerce/user/**").authenticated()
                         .requestMatchers("/e-commerce/orders/**").authenticated()
                         .requestMatchers("/e-commerce/reviews/add").authenticated()
                         .requestMatchers("/e-commerce/admin-dashboard/**").authenticated()

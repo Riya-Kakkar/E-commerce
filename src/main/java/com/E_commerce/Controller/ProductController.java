@@ -20,6 +20,8 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    //firstly you need to register a seller  , then login it ---so go to seller controller
+
     // for  product
     @GetMapping("/getProduct/{id}")
     public ResponseEntity<Optional<Product>> getProductById(@PathVariable int id) {

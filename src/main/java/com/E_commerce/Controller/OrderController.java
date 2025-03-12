@@ -62,6 +62,7 @@ public class OrderController {
         }
         return ResponseEntity.notFound().build();
     }
+
     // Update order status
     @PutMapping("/{orderId}/update-status")
     public ResponseEntity<String> updateOrderStatus(@PathVariable int orderId, @RequestParam String status) {
