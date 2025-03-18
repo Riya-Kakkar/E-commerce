@@ -18,7 +18,7 @@ public class CustomUserDetails  implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String userRole = user.getRole();
+        String userRole = user.role();
         if (!userRole.startsWith("ROLE_")) {
             userRole = "ROLE_" + userRole;
         }
@@ -28,18 +28,14 @@ public class CustomUserDetails  implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return user.password();
     }
-
-    /*@Override
-    public String getUsername() {
-        return userRequest.getEmail();
-    }*/
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return user.username();
     }
+
 
     @Override
     public boolean isAccountNonExpired() {

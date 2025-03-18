@@ -31,7 +31,7 @@ public class ReviewService {
             throw new IllegalStateException("User must purchase the product before reviewing.");
         }
 
-        List<Review> existingReviews = reviewRepository.findByUserIdAndProductId(user.getId(), product.getId());
+        List<Review> existingReviews = reviewRepository.findByUserIdAndProductId(user.id(), product.getId());
         if (existingReviews.isEmpty()) {
             throw new IllegalStateException("User has already reviewed this product.");
         }

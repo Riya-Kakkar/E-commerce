@@ -62,7 +62,7 @@ public class OrderService {
     // Get user orders
 
     public List<Order> getUserOrders(User user) {
-         user = userRepository.findById(user.getId())
+         user = userRepository.findById(user.id())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return orderRepository.findByUser(user);
     }

@@ -22,10 +22,6 @@ public class OrderItem {
     private int quantity;
     private long price;
 
-   /* public OrderItem(Order savedOrder, Product product, int quantity, long price) {
-    }
-*/
-
     public OrderItem( Product product, Order order, int quantity, long price) {
         this.product = product;
         this.order = order;

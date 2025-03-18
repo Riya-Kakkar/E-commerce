@@ -23,7 +23,6 @@ public class AdminController {
     //for admin dashboard
 
   @GetMapping("/dashboard")
-  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<String> getAdminDashboard(Principal principal) {
       System.out.println("Welcome Admin!" +principal.getName());
       return ResponseEntity.ok("Welcome Admin!" +principal.getName());

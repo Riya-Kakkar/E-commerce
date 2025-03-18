@@ -3,6 +3,7 @@ package com.E_commerce.Controller;
 import com.E_commerce.Entity.User;
 import com.E_commerce.Model.UserRequest;
 import com.E_commerce.Service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -22,31 +23,24 @@ public class UserController {
 
     //user registering
     @PostMapping("/register")
-    /*    public ResponseEntity<User> registerUser(@RequestParam String username, @RequestParam String email, @RequestParam String password, @RequestParam String role) { //we cant used this too bcoz @RequestParam is not binding the request in json format*/
-    /*    public ResponseEntity<User> registerUser(@RequestBody String username, @RequestBody String email, @RequestBody String password, @RequestBody String role) {  //causing an error bcoz we cant used multiple @RequestBody annotation*/
-    public ResponseEntity<String> registerUser(@RequestBody UserRequest userRequest) {
-        System.out.println("----------- Registering User with Details ------------- ");
-        System.out.println("USERNAME:- " + userRequest.getUsername());
-        System.out.println("EMAIL:- " + userRequest.getEmail());
-        System.out.println("PASSWORD:- " + userRequest.getPassword());
-        System.out.println("ROLE:- " + userRequest.getRole());
+    public ResponseEntity<String> registerUser( @Valid @RequestBody UserRequest userRequest) {
         return userService.registerUser(userRequest);
     }
 
 
     //handling user login
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
+//    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<String> login( @Valid @RequestBody UserRequest userRequest) {
         try {
-            System.out.println("   LOGIN  for UserName:    " + username);
-            Optional<User> authenticatedUser = userService.authenticateUser(username, password);
+              Optional<User> authenticatedUser = userService.authenticateUser(userRequest.getEmail(), userRequest.getPassword());
             if (authenticatedUser.isPresent()) {
-                System.out.println("     LOGIN USER -      " + authenticatedUser.get().getUsername());
-                return ResponseEntity.ok("Logged in as: " + authenticatedUser.get().getUsername());
+                System.out.println("     LOGIN USER -      " + authenticatedUser.get().username());
+                return ResponseEntity.ok("Logged in as: " + authenticatedUser.get().username());
             }
         } catch (Exception e) {
-            System.out.println("Authentication failed for username: " + username);
-            return ResponseEntity.status(401).body("   Authentication failed for username:   " +username);
+            System.out.println("Authentication failed for username/email : " + userRequest.getEmail());
+            return ResponseEntity.status(401).body("   Authentication failed for username/email :   " +userRequest.getEmail());
         }
         return ResponseEntity.status(401).body(" Authentication failed: Invalid username or password ");
     }
@@ -66,38 +60,53 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+
     // changing user password
     @PostMapping("/change-password")
-    public ResponseEntity<String> changePassword(@RequestParam String newPassword , Authentication authentication) {
+    public ResponseEntity<String> changePassword( @Valid @RequestBody UserRequest userRequest, Authentication authentication) {
         String currentUsername = authentication.getName();
-        String userChanged = userService.changePassword(currentUsername, newPassword);
+        String userChanged = userService.changePassword(currentUsername, userRequest.getPassword());
         return ResponseEntity.ok("Password updated successfully for :- " +userChanged);
     }
 
     //updating user profile
     @PutMapping("/update-profile")
-    public ResponseEntity<String> updateProfile(@RequestBody User user ,Authentication authentication) {
-        System.out.println("current user authenticated of authentication-- " + authentication);
+    public ResponseEntity<String> updateProfile(@Valid @RequestBody UserRequest userRequest ,Authentication authentication) {
 
+        System.out.println("current user authenticated of authentication-- " + authentication);
         if (authentication == null) {
             return ResponseEntity.status(401).body("Authentication failed: no authentication details found.");
         }
+
         String currentUsername = authentication.getName();
         System.out.println("current user authenticated-- " + currentUsername);
+
         User currentUser = userService.getUserByUsername(currentUsername);
         System.out.println("current user -- " + currentUser);
 
-        if (currentUser.getRole().equals("ROLE_admin") || currentUser.getUsername().equals(user.getUsername())) {
 
-            if (user.getUsername() != null && !user.getUsername().equals(currentUser.getUsername())) {
-                if (userService.isUsernameTaken(user.getUsername())) {
+        if (currentUser.role().equals("ROLE_admin") || currentUser.username().equals(userRequest.getUsername())) {
+
+            if (userRequest.getUsername() != null && !userRequest.getUsername().equals(currentUser.username())) {
+                if (userService.isUsernameTaken(userRequest  .getUsername())) {
                     return ResponseEntity.status(400).body("Username already taken.");
                 }
             }
-            currentUser.setEmail(user.getEmail());
+
+
+
+            // Create a new User instance with the updated details (since User is immutable)
+            User updatedUser = new User(
+                    currentUser.id(),
+                    userRequest.getUsername() != null ? userRequest.getUsername() : currentUser.username(),
+                    userRequest.getEmail() != null ? userRequest.getEmail() : currentUser.email(),
+                    currentUser.password(),  // Keep the existing password
+                    currentUser.role(),      // Keep the existing role
+                    currentUser.enable()     // Keep the existing active status
+            );
 
             try {
-                userService.updateProfile(currentUsername, user);  // Assuming this method saves the user entity to DB
+                userService.updateProfile(currentUsername, updatedUser);  // saves the user entity to DB
                 System.out.println("Profile updated successfully.");
                 return ResponseEntity.ok("Profile updated successfully.");
             } catch (Exception e) {
@@ -106,10 +115,10 @@ public class UserController {
                 return ResponseEntity.status(500).body("An error occurred while updating the profile.");
             }
 
-
         } else {
             System.out.println("You are not authorized to update this profile.");
             return ResponseEntity.status(403).body("You are not authorized to update this profile.");
         }
     }
+
 }

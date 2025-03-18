@@ -20,7 +20,8 @@ public class Product {
     @JoinColumn(name = "seller_id", referencedColumnName = "id")
     private Seller seller;
 
-  /*  private String imageUrl;*/
+  private String imageUrl;
+
 
     public int getId() {
         return id;
@@ -70,13 +71,14 @@ public class Product {
         this.seller = seller;
     }
 
-   /* public String getImageUrl() {
+ public String getImageUrl() {
         return imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }*/
+    }
+
 
     public Product(int id, String name, String description, long price, int stock) {
         this.id = id;

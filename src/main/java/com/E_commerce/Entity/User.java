@@ -7,6 +7,82 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "USER")
+public record User(
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        int id,
+
+        @NotBlank(message = "Name can not be empty!! ")
+        @Size(min = 2, max = 20, message = "Name must be in between 2-20 characters...")
+        String username,
+
+        @Column(unique = true)
+        @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook)\\.com$", message = "Invalid Email !! ")
+        String email,
+
+        String password,
+        String role,
+        boolean enable
+) {
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+package com.E_commerce.Entity;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
+@Entity
+@Table(name = "USER")
 public class User {
 
     @Id
@@ -80,7 +156,6 @@ public class User {
         return enable;
     }
 
-
     @Override
     public String toString() {
         return "User{" +
@@ -94,3 +169,4 @@ public class User {
     }
 }
 
+*/

@@ -33,7 +33,7 @@ public class CartService {
 
  // add to cart
     public Cart addToCart(User user, Product product, int quantity) {
-         user = userRepository.findById(user.getId())
+         user = userRepository.findById(user.id())
                 .orElseThrow(() -> new RuntimeException("User not found"));
          product = productRepository.findById(product.getId())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
