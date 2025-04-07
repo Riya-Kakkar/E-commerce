@@ -1,6 +1,8 @@
 package com.E_commerce.Config;
 
+import com.E_commerce.JWTSecurity.JwtAuthenticationFilter;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,12 +14,14 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import static org.springframework.security.config.Customizer.withDefaults;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class MyConfig {
+
+    @Autowired
+    private JwtAuthenticationFilter jwtFilter;
 
     @Bean
     public UserDetailsService getUserDetailsService() {
@@ -69,42 +73,10 @@ public class MyConfig {
                         .requestMatchers("/e-commerce/**").authenticated()
                         .anyRequest().authenticated()
                 )
-                .httpBasic(withDefaults()) // API-based authentication (no UI)
-                .csrf(csrf -> csrf.disable()) // Disable CSRF for APIs
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-
-
-   /* @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-           http
-                   .authorizeHttpRequests(auth->auth
-                          *//* .requestMatchers("/e-commerce/user/register").permitAll()
-                           .requestMatchers("/e-commerce/user/login").permitAll()*//*
-                          *//* .requestMatchers("/e-commerce/user/register", "/e-commerce/user/login").authenticated() *//*
-//                           .requestMatchers("/e-commerce/user/register", "/user/login").permitAll()
-//                           .requestMatchers("/e-commerce/user/**").authenticated()
-                          *//* .requestMatchers("/e-commerce/user/update-profile").permitAll()*//*
-                           .requestMatchers("/e-commerce/user/register", "/e-commerce/user/login").permitAll()
-                           .requestMatchers("/e-commerce/orders/**").authenticated() // Require login for orders
-                           .requestMatchers("/e-commerce/reviews/add").authenticated()
-                           .requestMatchers("/e-commerce/reviews/markInappropriate/**", "/e-commerce/reviews/delete/**").hasRole("ADMIN")
-                           .requestMatchers("/e-commerce/reviews/product/**", "/reviews/average/**").permitAll()
-                           .requestMatchers("/e-commerce/admin-dashboard/**").authenticated()
-                           .requestMatchers("/e-commerce/admin/**").hasRole("ADMIN")
-                           .requestMatchers("/e-commerce/customer/**").hasRole("CUSTOMER")
-                           .requestMatchers("/e-commerce/seller/**").hasRole("SELLER")
-                           *//*.requestMatchers("/e-commerce/**").permitAll()*//*
-                           .requestMatchers("/e-commerce/**").authenticated()
-                           .anyRequest().authenticated()
-                   )
-                   .httpBasic(withDefaults())  //dis is for api based authentication --------- no view page
-                   .csrf(csrf -> csrf.disable()
-                   )
-                   .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
-        return http.build();
-    }
-*/
 }

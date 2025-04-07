@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         User user = userByEmail.get();
         CustomUserDetails customUserDetails = new CustomUserDetails(user);
-        System.out.println("Loaded user: " + user.username() + " with role: " + user.role() + " having authorities: " + customUserDetails.getAuthorities());
+        System.out.println("Loaded user: " + user.getUsername() + " with role: " + user.getRole() + " having authorities: " + customUserDetails.getAuthorities());
         return new CustomUserDetails(user);
     }
 

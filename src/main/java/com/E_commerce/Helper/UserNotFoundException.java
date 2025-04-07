@@ -1,6 +1,8 @@
 package com.E_commerce.Helper;
 
-public class CustomHandlerMessage extends  RuntimeException{
+public class UserNotFoundException extends  RuntimeException{
 
-    
+    public UserNotFoundException(String message) {
+        super(message);
+    }
 }

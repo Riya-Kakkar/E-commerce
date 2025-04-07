@@ -1,6 +1,7 @@
-package com.E_commerce.Config;
+package com.E_commerce.JWTSecurity;
 
-import com.E_commerce.JWTSecurity.JwtTokenUtil;
+import com.E_commerce.Config.CustomUserDetails;
+import com.E_commerce.Config.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,6 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
+
         }
         filterChain.doFilter(request, response);
     }

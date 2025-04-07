@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "PRODUCT")
 public class Product {
 
+    //    @Min(value = 1, message = "Quantity must be at least 1")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
