@@ -5,34 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8d0af9f-f50b-4122-ace6-511a72a394bc" name="Changes" comment="modify with jwt authentication">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/UserProfileDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/CustomUserDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/CustomUserDetails.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/MyConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/MyConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/UserDetailsServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Helper/AuthenticationException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Helper/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Helper/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Helper/ResourceNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Helper/UserNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/JWTSecurity/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/JWTSecurity/JwtAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/JWTSecurity/JwtTokenUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/JWTSecurity/JwtTokenUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/AuthRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/AuthRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/AuthResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/AuthResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Config/CustomUserDetails.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Config/CustomUserDetails.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Config/MyConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Config/MyConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Config/UserDetailsServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Config/UserDetailsServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Helper/AuthenticationException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Helper/GlobalExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Helper/GlobalExceptionHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Helper/ResourceNotFoundException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/JWTSecurity/JwtAuthenticationFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/JWTSecurity/JwtAuthenticationFilter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/JWTSecurity/JwtTokenUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/JWTSecurity/JwtTokenUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Model/AuthRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Model/AuthRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Model/AuthResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Model/AuthResponse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/UserService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

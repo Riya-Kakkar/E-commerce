@@ -91,7 +91,10 @@ public class UserController {
         String currentUsername = authentication.getName();
         User updatedUser = new User();
         updatedUser.setUsername(userDTO.username());
-        updatedUser.setEmail(userDTO.email());
+       /* updatedUser.setEmail(userDTO.email());*/
+        updatedUser.setPassword(userDTO.password());
+        updatedUser.setEnable(true);
+        updatedUser.setRole(userDTO.role());
         userService.updateProfile(currentUsername, updatedUser);
         return ResponseEntity.ok("Profile updated successfully.");
     }
