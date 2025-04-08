@@ -1,12 +1,11 @@
 package com.E_commerce.Config;
 
 import com.E_commerce.Entity.User;
+import com.E_commerce.Helper.UserNotFoundException;
 import com.E_commerce.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,15 +17,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        //  user by email from db
-        Optional<User> userByEmail = userRepository.findByEmail(email);
-        if (userByEmail.isEmpty()) {
-            throw new UsernameNotFoundException("Could not found User with Email !!" +email);
-        }
-        User user = userByEmail.get();
-        CustomUserDetails customUserDetails = new CustomUserDetails(user);
-        System.out.println("Loaded user: " + user.getUsername() + " with role: " + user.getRole() + " having authorities: " + customUserDetails.getAuthorities());
+    public UserDetails loadUserByUsername(String email) throws UserNotFoundException {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + email));
         return new CustomUserDetails(user);
     }
 

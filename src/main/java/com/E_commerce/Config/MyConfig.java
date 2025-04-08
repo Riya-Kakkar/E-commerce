@@ -27,10 +27,12 @@ public class MyConfig {
     public UserDetailsService getUserDetailsService() {
         return new UserDetailsServiceImpl();
     }
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
