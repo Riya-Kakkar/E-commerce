@@ -1,10 +1,16 @@
 package com.E_commerce.Service;
 
+import com.E_commerce.Config.CustomUserDetails;
 import com.E_commerce.Entity.User;
+import com.E_commerce.Helper.UnauthorizedAccessException;
+import com.E_commerce.Config.JwtTokenUtil;
 import com.E_commerce.Model.UserDTO;
+import com.E_commerce.Model.UserProfileDTO;
 import com.E_commerce.Repository.UserRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,8 +28,12 @@ public class UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    private ModelMapper modelMapper;
+    private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    //user registering
     public void registerUser(UserDTO userDTO) {
         if (userRepository.findByUsername(userDTO.username()).isPresent()) {
             throw new IllegalArgumentException("Username '" + userDTO.username() + "' already exists.");
@@ -41,37 +51,82 @@ public class UserService {
         userRepository.save(user);
     }
 
-    //used in orderservice
+    //user by email --- used in loginUser
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+    }
+
+    // user login
+    public String loginUser(String email, String password) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(email, password)
+        );
+
+        User user = getUserByEmail(email);
+        String token = jwtTokenUtil.generateToken(user.getEmail());
+        System.out.println("Token created for user: " + user.getEmail());
+
+        return token;
+    }
+
+   // used in userController-- getProfile , changePassword  , updateProfile
+    public String extractEmailFromAuth(Authentication authentication) {
+        if (authentication == null) {
+            throw new UnauthorizedAccessException("User is not authenticated");
+        }
+
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        return userDetails.getEmail();
+    }
+
+    //used in order,cart,review
     public Optional<User> getUserById(int userId) {
         return userRepository.findById(userId);
     }
 
-    public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+    //get user profile by email
+    public UserProfileDTO getUserProfileByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+
+        UserProfileDTO userProfileData = new UserProfileDTO(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getRole(),
+                user.isEnable());
+        return userProfileData;
+
     }
 
-    // Change password
-    public String changePassword(String username, String newPassword) {
-        User user = getUserByUsername(username);
+    // changing user password by email
+    public String changePasswordByEmail(String email, String newPassword) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
         String encryptedPassword = passwordEncoder.encode(newPassword);
-        user = new User(user.getId(), user.getUsername(), user.getEmail(),encryptedPassword , user.getRole(), user.isEnable());
+        user = new User(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                encryptedPassword,
+                user.getRole(),
+                user.isEnable()
+        );
         userRepository.save(user);
-        return  username;
+        return user.getEmail();
     }
 
-    // Update profile
-    public void updateProfile(String username,  User updatedUser) {
-        User currentUser = getUserByUsername(username);
-        User userToUpdate = new User(
-                currentUser.getId(),
-                updatedUser.getUsername() != null ? updatedUser.getUsername() : currentUser.getUsername(),
-                updatedUser.getEmail() != null ? updatedUser.getEmail() : currentUser.getEmail(),
-                currentUser.getPassword(),
-                currentUser.getRole(),
-                currentUser.isEnable()
-        );
-        userRepository.save(userToUpdate);
+    //updating user profile by email
+    public void updateUserProfileByEmail(String email, UserDTO userDTO) {
+        User currentUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+
+        currentUser.setUsername(userDTO.username());
+        currentUser.setPassword(passwordEncoder.encode(userDTO.password()));
+        currentUser.setRole(userDTO.role().startsWith("ROLE_") ? userDTO.role() : "ROLE_" + userDTO.role());
+        currentUser.setEnable(true);
+        userRepository.save(currentUser);
     }
 
 }
-

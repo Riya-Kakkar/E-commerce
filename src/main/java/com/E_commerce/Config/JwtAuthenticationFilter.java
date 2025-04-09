@@ -1,7 +1,5 @@
-package com.E_commerce.JWTSecurity;
+package com.E_commerce.Config;
 
-import com.E_commerce.Config.CustomUserDetails;
-import com.E_commerce.Config.UserDetailsServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
@@ -35,7 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
-            username = jwtTokenUtil.extractUsername(token);
+            username = jwtTokenUtil.extractUserEmail(token);
         }
         try {
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

@@ -57,7 +57,7 @@
 		<!-- JJWT Jackson JSON Parser -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-jackson</artifactId> <!-- or jjwt-gson if you're using Gson -->
+			<artifactId>jjwt-jackson</artifactId>
 			<version>0.11.5</version>
 			<scope>runtime</scope>
 		</dependency>

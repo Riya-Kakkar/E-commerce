@@ -1,6 +1,5 @@
 package com.E_commerce.Config;
 
-import com.E_commerce.JWTSecurity.JwtAuthenticationFilter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

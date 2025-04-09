@@ -1,4 +1,4 @@
-package com.E_commerce.JWTSecurity;
+package com.E_commerce.Config;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -19,16 +19,16 @@ public class JwtTokenUtil {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateToken(String username) {
+    public String generateToken(String email) {
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public String extractUsername(String token) {
+    public String extractUserEmail(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
                 .build()

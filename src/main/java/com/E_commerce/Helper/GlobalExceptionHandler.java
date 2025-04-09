@@ -21,6 +21,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password!");
     }
 
+    @ExceptionHandler(UnauthorizedAccessException.class)
+    public ResponseEntity<String> handleUnauthorizedAccess(UnauthorizedAccessException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+    }
+
+
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<?> handleUserNotFound(UsernameNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found!!");

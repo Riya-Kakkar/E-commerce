@@ -5,9 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8d0af9f-f50b-4122-ace6-511a72a394bc" name="Changes" comment="modify with jwt authentication">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Helper/UnauthorizedAccessException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/PasswordChangeDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/UserDetailsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/CustomUserDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/CustomUserDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/MyConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/MyConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Helper/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Helper/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/JWTSecurity/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/JWTSecurity/JwtTokenUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/JwtTokenUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/UserProfileDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/UserProfileDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Config/CustomUserDetails.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Config/CustomUserDetails.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Config/MyConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Config/MyConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Helper/GlobalExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Helper/GlobalExceptionHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/JWTSecurity/JwtAuthenticationFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/JWTSecurity/JwtTokenUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Model/UserProfileDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Model/UserProfileDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/UserService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
