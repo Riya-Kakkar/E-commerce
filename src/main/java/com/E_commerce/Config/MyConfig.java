@@ -67,8 +67,8 @@ public class MyConfig {
                         // Role-based Access Control
                         .requestMatchers("/e-commerce/reviews/markInappropriate/**", "/e-commerce/reviews/delete/**").hasRole("ADMIN")
                         .requestMatchers("/e-commerce/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/e-commerce/customer/**").hasRole("CUSTOMER")
-                        .requestMatchers("/e-commerce/seller/**").hasRole("SELLER")
+                        .requestMatchers("/e-commerce/products/customer/**").hasRole("CUSTOMER")
+                        .requestMatchers("/e-commerce/products/seller/**").hasRole("SELLER")
 
                         // Secure all other endpoints
                         .requestMatchers("/e-commerce/**").authenticated()

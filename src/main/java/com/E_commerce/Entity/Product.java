@@ -21,6 +21,8 @@ public class Product {
     private long price;
     private int stock;
 
+    private String category;
+
     @ManyToOne
     @JoinColumn(name = "seller_id", referencedColumnName = "id")
     private Seller seller;

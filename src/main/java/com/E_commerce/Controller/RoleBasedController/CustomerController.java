@@ -1,29 +1,34 @@
 package com.E_commerce.Controller.RoleBasedController;
 
 import com.E_commerce.Entity.Product;
+import com.E_commerce.Model.UserProfileDTO;
 import com.E_commerce.Service.ProductService;
+import com.E_commerce.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import java.security.Principal;
 
 
 //localhost:9090/e-commerce/products/customers
 
 @RestController
-@RequestMapping("/e-commerce/products/customers")
+@RequestMapping("/e-commerce/products/customer")
 public class CustomerController {
 
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/profile")
-    @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<String> getCustomerProfile(Principal principal) {
-        System.out.println("Welcome Customer!" +principal.getName());
-        return ResponseEntity.ok("Welcome Customer!"  +principal.getName());
+    public ResponseEntity<UserProfileDTO> getCustomerProfile(Authentication authentication) {
+        String currentUserEmail = userService.extractEmailFromAuth(authentication);
+        UserProfileDTO profile = userService.getUserProfileByEmail(currentUserEmail);
+        return ResponseEntity.ok(profile);
     }
 
 

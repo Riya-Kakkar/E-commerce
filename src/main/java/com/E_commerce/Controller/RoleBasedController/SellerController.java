@@ -2,20 +2,20 @@ package com.E_commerce.Controller.RoleBasedController;
 
 import com.E_commerce.Entity.Product;
 import com.E_commerce.Entity.Seller;
+import com.E_commerce.Model.UserProfileDTO;
 import com.E_commerce.Service.ProductService;
 import com.E_commerce.Service.SellerService;
+import org.springframework.security.core.Authentication;
+import com.E_commerce.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 import java.util.List;
 
 //localhost:9090/e-commerce/products/sellers
 
 @RestController
-@RequestMapping("/e-commerce/products/sellers")
+@RequestMapping("/e-commerce/products/seller")
 public class SellerController {
 
     @Autowired
@@ -24,11 +24,14 @@ public class SellerController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/sellerDashboard")
-    @PreAuthorize("hasRole('SELLER')")
-    public ResponseEntity<String> sellerDashboard(Principal principal) {
-        System.out.println("Welcome Seller!" +principal.getName());
-        return ResponseEntity.ok("Welcome Seller!");
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/profile")
+    public ResponseEntity<UserProfileDTO> getSellerProfile(Authentication authentication) {
+        String currentUserEmail = userService.extractEmailFromAuth(authentication);
+        UserProfileDTO profile = userService.getUserProfileByEmail(currentUserEmail);
+        return ResponseEntity.ok(profile);
     }
 
 

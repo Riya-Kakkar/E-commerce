@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,6 +34,8 @@ public class UserService {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+    private final List<String> allowedRoles = List.of("ROLE_ADMIN", "ROLE_CUSTOMER", "ROLE_SELLER");
+
     //user registering
     public void registerUser(UserDTO userDTO) {
         if (userRepository.findByUsername(userDTO.username()).isPresent()) {
@@ -43,10 +46,14 @@ public class UserService {
             throw new IllegalArgumentException("Email '" + userDTO.email() + "' already exists.");
         }
 
-        String role = userDTO.role().startsWith("ROLE_") ? userDTO.role() : "ROLE_" + userDTO.role();
+        String formattedRole = userDTO.role().toUpperCase().startsWith("ROLE_") ? userDTO.role().toUpperCase() : "ROLE_" + userDTO.role().toUpperCase();
+
+        if (!allowedRoles.contains(formattedRole)) {
+            throw new IllegalArgumentException("Invalid role! Allowed roles: ADMIN, CUSTOMER, SELLER.");
+        }
 
         User user = new User(0, userDTO.username(), userDTO.email(),
-                passwordEncoder.encode(userDTO.password()), role, true);
+                passwordEncoder.encode(userDTO.password()), formattedRole, true);
 
         userRepository.save(user);
     }
