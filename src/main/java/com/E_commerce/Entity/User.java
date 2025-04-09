@@ -24,6 +24,7 @@ public class User {
         @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook)\\.com$", message = "Invalid Email !! ")
         private String email;
 
+        @NotBlank(message = "Password cannot be empty!!")
         private String password;
         private String role;
         private boolean enable;
