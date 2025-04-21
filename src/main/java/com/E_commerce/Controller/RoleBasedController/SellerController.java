@@ -1,10 +1,11 @@
 package com.E_commerce.Controller.RoleBasedController;
 
 import com.E_commerce.Entity.Product;
-import com.E_commerce.Entity.Seller;
-import com.E_commerce.Model.UserProfileDTO;
+import com.E_commerce.Model.*;
 import com.E_commerce.Service.ProductService;
 import com.E_commerce.Service.SellerService;
+import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import com.E_commerce.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.util.List;
 //localhost:9090/e-commerce/products/sellers
 
 @RestController
+@PreAuthorize("hasRole('SELLER')")
 @RequestMapping("/e-commerce/products/seller")
 public class SellerController {
 
@@ -27,6 +29,7 @@ public class SellerController {
     @Autowired
     private UserService userService;
 
+
     @GetMapping("/profile")
     public ResponseEntity<UserProfileDTO> getSellerProfile(Authentication authentication) {
         String currentUserEmail = userService.extractEmailFromAuth(authentication);
@@ -34,27 +37,19 @@ public class SellerController {
         return ResponseEntity.ok(profile);
     }
 
-
-    // to register an account
+    // register
     @PostMapping("/registerSeller")
-    public ResponseEntity<String> registerSeller(@RequestBody Seller seller) {
-        try {
-            sellerService.registerSeller(seller);
+    public ResponseEntity<String> registerSeller(@Valid @RequestBody SellerRegDTO sellerRegDTO) {
+            sellerService.registerSeller(sellerRegDTO);
             return ResponseEntity.ok("Seller registered successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.status(400).body("Error: " + e.getMessage());
-        }
+
     }
 
     //  log in  with username and password
     @PostMapping("/loginSeller")
-    public ResponseEntity<String> loginSeller(@RequestParam String username, @RequestParam String password) {
-        try {
-            sellerService.loginSeller(username, password);
+    public ResponseEntity<String> loginSeller(@Valid @RequestBody SellerLoginDTO sellerLoginDTO) {
+            sellerService.loginSeller(sellerLoginDTO.username(), sellerLoginDTO.password());
             return ResponseEntity.ok("Seller logged in successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.status(400).body("Error: " + e.getMessage());
-        }
     }
 
     //view their own products
@@ -65,30 +60,26 @@ public class SellerController {
 
     //  create a new product
     @PostMapping("/create")
-    public ResponseEntity<String> createProduct(@RequestBody Product product, @RequestParam String username) throws Exception {
-        System.out.println("Adding new product with details: ");
-        Product createdProduct = productService.createProduct(product, username);
-        System.out.println("Your Product is Created..." + createdProduct);
+    public ResponseEntity<String> createProduct(@Valid @RequestBody SellerProductDTO sellerProductDTO, Authentication authentication) {
+        String currentUsername = authentication.getName();
+        Product createdProduct = productService.createProduct(sellerProductDTO, currentUsername);
         return ResponseEntity.ok("Your Product is Created... " +createdProduct);
     }
 
     //  update an existing product
     @PutMapping("/update/{productId}")
-    public ResponseEntity<String > updateProduct(
-            @PathVariable int productId,
-            @RequestBody Product productDetails,
-            @RequestParam String username) throws Exception {
+    public ResponseEntity<String > updateProduct(@Valid @RequestBody SellerProductDTO sellerProductDTO, Authentication authentication){
 
-        Product updatedProduct = productService.updateProduct(productId, productDetails, username);
-        System.out.println("Your Product is Updated... ");
+        String currentUsername = authentication.getName();
+        Product updatedProduct = productService.updateProduct(sellerProductDTO, currentUsername);
         return ResponseEntity.ok("Your Product is Updated... " +updatedProduct);
     }
 
     //  to delete a product
     @DeleteMapping("/delete/{productId}")
-    public ResponseEntity<String> deleteProduct(@PathVariable int productId, @RequestParam String username) throws Exception {
-        productService.deleteProduct(productId, username);
-        System.out.println("Your Product is Deleted...");
+    public ResponseEntity<String> deleteProduct(@Valid  @RequestBody ProductIdDTO productIdDTO , Authentication authentication  ) throws Exception {
+        String currentUsername = authentication.getName();
+        productService.deleteProduct(productIdDTO.productId(), currentUsername);
         return ResponseEntity.ok("Product deleted successfully.");
     }
 

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +33,9 @@ public class ReviewController {
                                             @RequestParam int rating, @RequestParam String comment) {
         try {
             User user = userService.getUserById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-            Product product = productService.getProductById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
+
+            Product product = productService.getProductById(productId);
+
 
             System.out.println("Adding review for product with ID: " + productId +
                     ", Rating: " + rating + ", Comment: " + comment);
@@ -78,7 +79,7 @@ public class ReviewController {
 
     @GetMapping("/average/{productId}")
     public ResponseEntity<Double> getAverageRating(@PathVariable int productId) {
-        Product product = productService.getProductById(productId).orElse(null);
+        Product product = productService.getProductById(productId);
 
         if (product == null) {
             return ResponseEntity.notFound().build(); // Product not found

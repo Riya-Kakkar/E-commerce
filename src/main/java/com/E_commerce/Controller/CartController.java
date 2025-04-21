@@ -6,17 +6,13 @@ import com.E_commerce.Entity.Order;
 import com.E_commerce.Entity.Product;
 import com.E_commerce.Entity.User;
 import com.E_commerce.Service.CartService;
-import com.E_commerce.Service.OrderService;
 import com.E_commerce.Service.ProductService;
 import com.E_commerce.Service.UserService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 //localhost:9090/e-commerce/cart
 
@@ -38,7 +34,7 @@ public class CartController {
     @PostMapping("/add")
     public ResponseEntity<Cart> addToCart(@RequestParam int userId, @RequestParam int productId, @RequestParam int quantity) {
         User user = userService.getUserById(userId).orElse(null);
-        Product product = productService.getProductById(productId).orElse(null);
+        Product product = productService.getProductById(productId);
         if (user != null && product != null) {
             Cart cart = cartService.addToCart(user, product, quantity);
 
@@ -65,7 +61,7 @@ public class CartController {
     @DeleteMapping("/remove")
     public ResponseEntity<String> removeFromCart(@RequestParam int userId, @RequestParam int productId ) {
         User user = userService.getUserById(userId).orElse(null);
-        Product product = productService.getProductById(productId).orElse(null);
+        Product product = productService.getProductById(productId);
         if (user != null && product != null) {
             System.out.println("Removing product from cart: User ID: " + userId + ", Product ID: " + productId);
             cartService.removeFromCart(user, product);

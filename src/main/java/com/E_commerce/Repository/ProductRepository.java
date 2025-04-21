@@ -12,10 +12,9 @@ import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-   List<Product> findBySellerId(int sellerId);
     List<Product> findBySeller(Seller seller);
-    Page<Product> findByPriceBetween(long minPrice, long maxPrice, Pageable pageable);
     Page<Product> findByNameContaining(String name, Pageable pageable);
+    Page<Product> findByPrice(Long price, Pageable pageable);
     Page<Product> findByCategory(String category, Pageable pageable);
-
+    Page<Product> findByStock(Integer stock, Pageable pageable);
 }

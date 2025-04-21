@@ -3,9 +3,14 @@ package com.E_commerce.Service;
 
 import com.E_commerce.Entity.Product;
 import com.E_commerce.Entity.Seller;
+import com.E_commerce.Helper.InvalidCredentialsException;
+import com.E_commerce.Helper.SellerAlreadyExistsException;
+import com.E_commerce.Helper.SellerNotFoundException;
+import com.E_commerce.Model.SellerRegDTO;
 import com.E_commerce.Repository.ProductRepository;
 import com.E_commerce.Repository.SellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,20 +23,28 @@ public class SellerService {
     @Autowired
     private ProductRepository productRepository;
 
-    // Register a new seller
-    public void registerSeller(Seller seller) throws Exception {
-        if (sellerRepository.findByUsername(seller.getUsername()) != null) {
-            throw new Exception("Username already taken.");
+    public void registerSeller(SellerRegDTO sellerRegDTO)  {
+        if (sellerRepository.findByUsername(sellerRegDTO.username()) != null) {
+            throw new SellerAlreadyExistsException("Username already taken.");
         }
+
+        Seller seller = new Seller();
+        seller.setUsername(sellerRegDTO.username());
+        seller.setEmail(sellerRegDTO.email());
+        seller.setPassword(sellerRegDTO.password());
+
         sellerRepository.save(seller);
     }
 
     // Seller login
-    public void loginSeller(String username, String password) throws Exception {
+    public void loginSeller(String username, String password)  {
         Seller seller = sellerRepository.findByUsername(username);
-        if (seller == null || !password.equals(seller.getPassword())) {
-            throw new Exception("Invalid login credentials.");
+        if (seller == null) {
+            throw new SellerNotFoundException("Seller not found with username: " + username);
         }
+        if ( !password.equals(seller.getPassword())) {
+                throw new InvalidCredentialsException("Invalid password!");
+            }
     }
 
     // Get all products for a seller
