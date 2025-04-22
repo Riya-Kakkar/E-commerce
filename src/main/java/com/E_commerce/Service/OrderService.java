@@ -1,14 +1,18 @@
 package com.E_commerce.Service;
 
 import com.E_commerce.Entity.*;
+import com.E_commerce.Helper.CartNotFoundException;
+import com.E_commerce.Helper.OrderNotFoundException;
+import com.E_commerce.Model.OrderUpdateStatus;
 import com.E_commerce.Repository.CartRepository;
 import com.E_commerce.Repository.OrderItemRepository;
 import com.E_commerce.Repository.OrderRepository;
 import com.E_commerce.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class OrderService {
@@ -29,17 +33,19 @@ public class OrderService {
 
 
     //place an order
-    public Order placeOrder(int userId , long totalAmount) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public Order placeOrder(User user ) {
+        User foundUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        List<Cart> cartItems = cartRepository.findByUser(user);
+        List<Cart> cartItems = cartRepository.findByUser(foundUser);
+
         if (cartItems.isEmpty()) {
-            throw new RuntimeException("Cart is empty");
+            throw new CartNotFoundException("Cart is empty");
         }
 
-        long calculatedTotalAmount = 0L;
-        Order order = new Order(user, totalAmount, "Pending");
+        long calculatedTotalAmount = 0;
+
+        Order order = new Order(foundUser, calculatedTotalAmount, OrderStatus.PENDING);
 
         Order savedOrder = orderRepository.save(order);
 
@@ -48,35 +54,46 @@ public class OrderService {
             OrderItem orderItem = new OrderItem(cartItem.getProduct(), savedOrder, cartItem.getQuantity(), price);
             orderItemRepository.save(orderItem);
 
-            totalAmount += price * cartItem.getQuantity();
+            calculatedTotalAmount += price * cartItem.getQuantity();
         }
 
-        savedOrder.setTotalAmount(totalAmount);
+        savedOrder.setTotalAmount(calculatedTotalAmount);
         orderRepository.save(savedOrder);
 
-        cartRepository.deleteByUser(user);
+        cartRepository.deleteByUser(foundUser);
 
         return savedOrder;
     }
 
-    // Get user orders
-
     public List<Order> getUserOrders(User user) {
-         user = userRepository.findById(user.getId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        user = userRepository.findById(user.getId())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         return orderRepository.findByUser(user);
     }
 
     // Update order status
-    public Order updateOrderStatus(int orderId, String status) {
-        Order order = orderRepository.findById(orderId).orElse(null);
-        if (order != null) {
-            order.setStatus(status);
-            return orderRepository.save(order);
+    public void updateOrderStatus(OrderUpdateStatus orderUpdateStatus) {
+        Order order = orderRepository.findById(orderUpdateStatus.orderId()).orElseThrow(() -> new OrderNotFoundException("Order not found"));
+
+        String newStatus = orderUpdateStatus.status().toUpperCase();
+
+        //  Validate against allowed status values
+        List<String> validStatuses = List.of(
+                OrderStatus.PENDING,
+                OrderStatus.SHIPPED,
+                OrderStatus.DELIVERED
+        );
+
+        if (!validStatuses.contains(newStatus)) {
+            throw new IllegalArgumentException("Invalid order status: " + newStatus);
         }
-        return null;
+
+        order.setStatus(newStatus);
+        orderRepository.save(order);
     }
 
+
+//optional
     public boolean checkIfUserHasPurchasedProduct(User user, Product product) {
         List<Order> orders = orderRepository.findByUser(user);
 

@@ -11,7 +11,15 @@ import com.E_commerce.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.UUID;
 
 //localhost:9090/e-commerce/products/sellers
 
@@ -58,12 +66,32 @@ public class SellerController {
         return sellerService.getSellerProducts(username);
     }
 
+
     //  create a new product
     @PostMapping("/create")
-    public ResponseEntity<String> createProduct(@Valid @RequestBody SellerProductDTO sellerProductDTO, Authentication authentication) {
-        String currentUsername = authentication.getName();
-        Product createdProduct = productService.createProduct(sellerProductDTO, currentUsername);
-        return ResponseEntity.ok("Your Product is Created... " +createdProduct);
+    public ResponseEntity<String> createProduct(
+            @RequestParam("name") String name,
+            @RequestParam("description") String description,
+            @RequestParam("price") Long price,
+            @RequestParam("stock") Integer stock,
+            @RequestParam("category") String category,
+            @RequestParam("image") MultipartFile image,
+            Authentication authentication
+    ) throws  IOException{
+
+           String imageUrl = productService.saveImage(image);
+
+            // Create DTO record
+            SellerProductDTO sellerProductDTO = new SellerProductDTO(
+                    0, name, description, price, stock, category, imageUrl
+            );
+
+            String currentUsername = authentication.getName();
+            Product createdProduct = productService.createProduct(sellerProductDTO, currentUsername);
+
+            return ResponseEntity.ok("Product created successfully. ID: " + createdProduct.getId());
+      /*
+        return ResponseEntity.ok("Your Product is Created... " +createdProduct);*/
     }
 
     //  update an existing product

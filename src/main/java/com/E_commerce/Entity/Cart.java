@@ -1,7 +1,13 @@
 package com.E_commerce.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "CART")
 public class Cart {
@@ -19,51 +25,10 @@ public class Cart {
 
     private int quantity;
 
-    public Cart() {
-    }
-
     public Cart(User user, Product product, int quantity) {
         this.user = user;
         this.product = product;
         this.quantity = quantity;
     }
 
-    public Cart(int id, User user, Product product, int quantity) {
-        this.id = id;
-        this.user = user;
-        this.product = product;
-        this.quantity = quantity;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 }

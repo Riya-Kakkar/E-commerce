@@ -25,11 +25,12 @@ public class Product {
     private int stock;
     private String category;
 
+    private String imageUrl;
+
     @ManyToOne
     @JoinColumn(name = "seller_id", referencedColumnName = "id")
     private Seller seller;
 
-    private String imageUrl;
 
 }
 

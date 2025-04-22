@@ -2,8 +2,10 @@ package com.E_commerce.Controller;
 
 import com.E_commerce.Entity.Order;
 import com.E_commerce.Entity.User;
+import com.E_commerce.Model.OrderUpdateStatus;
 import com.E_commerce.Service.OrderService;
 import com.E_commerce.Service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
 //localhost:9090/e-commerce/orders
 
 @RestController
@@ -23,50 +26,23 @@ public class OrderController {
     private UserService userService;
 
     // Place an order
-    @PostMapping("/place/{userId}")
-    public ResponseEntity<Order> placeOrder(@PathVariable int userId, @RequestParam long totalAmount) {
-        System.out.println("Placing order for user with ID: " + userId + " and total amount: " + totalAmount);
-        Optional<User> userOptional = userService.getUserById(userId);
-
-        if (userOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-
-        Order order = orderService.placeOrder(userId, totalAmount);
-        return ResponseEntity.ok(order);
-
-    }
-
-
-    /*// Place an order
     @PostMapping("/place")
-    public ResponseEntity<Order> placeOrder(@RequestParam int userId, @RequestParam long totalAmount) {
-        System.out.println("Placing order for user with ID: " + userId + " and total amount: " + totalAmount);
-        Optional<User> userOptional = userService.getUserById(userId);
-        if (userOptional.isPresent()) {
-            Order order = orderService.placeOrder(userOptional.get(), totalAmount);
-            return ResponseEntity.ok(order);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-    }*/
-
+    public ResponseEntity<Order> placeOrder(@RequestParam User userId) {
+        Order order = orderService.placeOrder(userId);
+        return ResponseEntity.ok(order);
+    }
 
     // Get user orders
     @GetMapping("/getUserOrders/{userId}")
-    public ResponseEntity<List<Order>> getUserOrders(@PathVariable int userId) {
-        System.out.println("Fetching orders for user with ID: " + userId);
-        Optional<User> userOptional = userService.getUserById(userId);
-        if (userOptional.isPresent()) {
-            List<Order> orders = orderService.getUserOrders(userOptional.get());
+    public ResponseEntity<List<Order>> getUserOrders(@PathVariable User userId) {
+            List<Order> orders = orderService.getUserOrders(userId);
             return ResponseEntity.ok(orders);
-        }
-        return ResponseEntity.notFound().build();
     }
 
     // Update order status
-    @PutMapping("/{orderId}/update-status")
-    public ResponseEntity<String> updateOrderStatus(@PathVariable int orderId, @RequestParam String status) {
-        orderService.updateOrderStatus(orderId, status);
+    @PutMapping("/update-status")
+    public ResponseEntity<String> updateOrderStatus(@Valid  @RequestBody OrderUpdateStatus orderUpdateStatus) {
+        orderService.updateOrderStatus(orderUpdateStatus);
         return ResponseEntity.ok("Order status updated");
     }
 

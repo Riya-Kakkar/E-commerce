@@ -12,10 +12,10 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-//used in order service
-List<Order> findByUser(User user);
+    List<Order> findByUser(User user);
+
     @Query("SELECT SUM(o.totalAmount) FROM Order o WHERE o.status = 'DELIVERED'")
-    Long getTotalRevenue();
+    double calculateTotalRevenue();
 }
 
 

@@ -1,13 +1,14 @@
 package com.E_commerce.Controller;
 
-
 import com.E_commerce.Entity.Cart;
-import com.E_commerce.Entity.Order;
 import com.E_commerce.Entity.Product;
 import com.E_commerce.Entity.User;
+import com.E_commerce.Model.CartAddDTO;
+import com.E_commerce.Model.CartRemoveDTO;
 import com.E_commerce.Service.CartService;
 import com.E_commerce.Service.ProductService;
 import com.E_commerce.Service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,59 +29,34 @@ public class CartController {
     private ProductService productService;
 
 
-    //for cart
-
     // Add product to cart
     @PostMapping("/add")
-    public ResponseEntity<Cart> addToCart(@RequestParam int userId, @RequestParam int productId, @RequestParam int quantity) {
-        User user = userService.getUserById(userId).orElse(null);
-        Product product = productService.getProductById(productId);
-        if (user != null && product != null) {
-            Cart cart = cartService.addToCart(user, product, quantity);
-
-            System.out.println("Adding product to cart: User ID: " + userId + ", Product ID: " + productId + ", Quantity: " + quantity);
-            return ResponseEntity.ok(cart);
-        }
-        return ResponseEntity.badRequest().body(null);
+    public ResponseEntity<String> addToCart(@Valid @RequestBody CartAddDTO cartAddDTO) {
+              cartService.addToCart(cartAddDTO);
+            return ResponseEntity.ok("Product added to cart!");
     }
-
-    // Get user's cart
-    @GetMapping("/getUserCart/{userId}")
-    public ResponseEntity<List<Cart>> getUserCart(@PathVariable int userId) {
-        System.out.println("Fetching cart for user with ID: " + userId);
-        User user = userService.getUserById(userId).orElse(null);
-        if (user != null) {
-            return ResponseEntity.ok(cartService.getUserCart(user));
-        }
-        return ResponseEntity.notFound().build();
-    }
-
 
 
     // Remove from cart
     @DeleteMapping("/remove")
-    public ResponseEntity<String> removeFromCart(@RequestParam int userId, @RequestParam int productId ) {
-        User user = userService.getUserById(userId).orElse(null);
-        Product product = productService.getProductById(productId);
-        if (user != null && product != null) {
-            System.out.println("Removing product from cart: User ID: " + userId + ", Product ID: " + productId);
-            cartService.removeFromCart(user, product);
-            return ResponseEntity.ok("Product removed from cart.");
-        }
-        return ResponseEntity.badRequest().body("User or Product not found.");
+    public ResponseEntity<String> removeFromCart(@Valid @RequestBody CartRemoveDTO cartRemoveDTO ) {
+         cartService.removeFromCart(cartRemoveDTO);
+        return ResponseEntity.ok("Product removed from cart");
+
     }
 
+    // Get user's cart
+    @GetMapping("/getUserCart")
+    public ResponseEntity<List<Cart>> getUserCart( @RequestParam User userId) {
+        List<Cart> cartItems = cartService.getUserCart(userId);
+        return ResponseEntity.ok(cartItems);
+    }
 
     // Clear cart
     @DeleteMapping("/clear/{userId}")
-    public ResponseEntity<String> clearCart(@PathVariable int userId ) {
-        User user = userService.getUserById(userId).orElse(null);
-        if (user != null) {
-            System.out.println("Clearing cart for user with ID: " + userId);
-            cartService.clearCart(user);
+    public ResponseEntity<String> clearCart(@PathVariable User userId ) {
+            cartService.clearCart(userId);
             return ResponseEntity.ok("Cart cleared successfully.");
-        }
-        return ResponseEntity.notFound().build();
     }
 
 }

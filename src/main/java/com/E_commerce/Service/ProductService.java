@@ -10,10 +10,20 @@ import com.E_commerce.Model.SellerProductDTO;
 import com.E_commerce.Repository.ProductRepository;
 import com.E_commerce.Repository.SellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 
 
 @Service
@@ -24,6 +34,18 @@ public class ProductService {
 
     @Autowired
     private SellerRepository sellerRepository;
+
+    public String saveImage(MultipartFile image) throws IOException {
+        if (image.isEmpty()) {
+            throw new IllegalArgumentException("Image file is empty.");
+        }
+
+        File saveDir = new ClassPathResource("static/images").getFile();
+        String fileName = UUID.randomUUID() + "_" + image.getOriginalFilename();
+        Path imagePath = Paths.get(saveDir.getAbsolutePath() + File.separator + fileName);
+        Files.copy(image.getInputStream(), imagePath, StandardCopyOption.REPLACE_EXISTING);
+        return "/images/" + fileName;
+    }
 
     // Create a product for seller
     public Product createProduct(SellerProductDTO sellerProductDTO, String username) {
@@ -37,6 +59,7 @@ public class ProductService {
         product.setPrice(sellerProductDTO.price());
         product.setStock(sellerProductDTO.stock());
         product.setCategory(sellerProductDTO.category());
+        product.setImageUrl(sellerProductDTO.image());
         product.setSeller(seller);
 
         return productRepository.save(product);

@@ -4,13 +4,14 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+
 public record SellerProductDTO(
 
         @NotNull(message = "Product ID is required for update")
-        int productId,
+         int productId,
 
         @NotBlank(message = "Product name is required")
-         String name,
+          String name,
 
         @NotBlank(message = "Description is required")
          String description,
@@ -24,6 +25,7 @@ public record SellerProductDTO(
          Integer stock,
 
         @NotBlank(message = "Category is required")
-         String category
-) {
-}
+         String category,
+
+         String image
+){}
