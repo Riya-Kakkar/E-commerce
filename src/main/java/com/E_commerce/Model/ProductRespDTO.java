@@ -6,6 +6,5 @@ import org.springframework.data.domain.Page;
 public record ProductRespDTO(
         String message,
         Page<Product> data
-)
-{
+) {
 }

@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.stereotype.Component;
@@ -33,12 +34,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
-            username = jwtTokenUtil.extractUserEmail(token);
+            username = jwtTokenUtil.extractUsername(token);
         }
         try {
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                CustomUserDetails userDetails = (CustomUserDetails) userDetailsServiceImpl.loadUserByUsername(username);
-                if (jwtTokenUtil.validateToken(token)) {
+
+                UserDetails userDetails =  userDetailsServiceImpl.loadUserByUsername(username);
+
+                if (jwtTokenUtil.validateToken(token , userDetails)) {
                     UsernamePasswordAuthenticationToken authToken =
                             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 

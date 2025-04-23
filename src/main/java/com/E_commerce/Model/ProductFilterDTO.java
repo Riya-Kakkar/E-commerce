@@ -7,8 +7,10 @@ public record ProductFilterDTO(
         String name,
         String category,
 
-        @Min(value = 0, message = "Price must be 0 or more")
-        Long price,
+
+         Long priceMin,
+
+         Long priceMax,
 
         @Min(value = 0, message = "Stock must be 0 or more")
         Integer stock,
@@ -23,7 +25,7 @@ public record ProductFilterDTO(
         if (page == null || page < 0) {
             page = 0;
         }
-        if (size == null || size <= 0) {
+        if (size == null || size <= 5) {
             size = 10;
         }
     }

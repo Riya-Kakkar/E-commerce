@@ -4,61 +4,43 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8d0af9f-f50b-4122-ace6-511a72a394bc" name="Changes" comment="modify with product">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Entity/OrderStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Helper/CartNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Helper/OrderNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Helper/ReviewNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/AdminDashboardDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/CartAddDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/CartRemoveDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/OrderUpdateStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/ReviewAddDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images" afterDir="false" />
+    <list default="true" id="e8d0af9f-f50b-4122-ace6-511a72a394bc" name="Changes" comment="updated everything">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/SellerProductResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/UpdateRoleRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/AdminDashboardController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/CartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/ReviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/ReviewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/CustomUserDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/CustomUserDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/JwtTokenUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/JwtTokenUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Config/UserDetailsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/ProductController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/RoleBasedController/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/RoleBasedController/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/RoleBasedController/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/RoleBasedController/CustomerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/RoleBasedController/SellerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/RoleBasedController/SellerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Entity/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Entity/Cart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Entity/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Entity/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Entity/OrderItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Entity/OrderItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Entity/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Entity/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Entity/Review.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Helper/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Helper/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/SellerProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/SellerProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Repository/OrderItemRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Repository/OrderItemRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Repository/OrderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Repository/ReviewRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Repository/ReviewRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/AdminDashboardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/AdminService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/CartService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/ProductFilterDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/ProductFilterDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/ProductRespDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/ProductRespDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/SellerRegDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Model/UserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Repository/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Repository/SellerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Repository/SellerRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/ReviewService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/AdminDashboardController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/CartController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/CartController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/OrderController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/OrderController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/ReviewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/ReviewController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/SellerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/SellerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Config/CustomUserDetails.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Config/CustomUserDetails.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Config/JwtAuthenticationFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Config/JwtAuthenticationFilter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Config/JwtTokenUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Config/JwtTokenUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/ProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/ProductController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/RoleBasedController/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/RoleBasedController/AdminController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/RoleBasedController/CustomerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/RoleBasedController/CustomerController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/RoleBasedController/SellerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/RoleBasedController/SellerController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Entity/Cart.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Entity/Cart.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Entity/Order.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Entity/Order.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Entity/OrderItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Entity/OrderItem.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Entity/Product.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Entity/Product.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Entity/Review.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Entity/Review.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Helper/GlobalExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Helper/GlobalExceptionHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Model/SellerProductDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Model/SellerProductDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Repository/OrderItemRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Repository/OrderItemRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Repository/OrderRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Repository/OrderRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/AdminDashboardService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/CartService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/CartService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/OrderService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/OrderService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Model/ProductFilterDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Model/ProductFilterDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Model/SellerRegDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Model/UserDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Model/UserDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Repository/ProductRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Repository/ProductRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/ProductService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/ProductService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/ReviewService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/ReviewService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/SellerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/SellerService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/UserService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,12 +73,12 @@
     &quot;assignee&quot;: &quot;Riya-Kakkar&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Riya-Kakkar/E-commerce.git",
-    "accountId": "03eca734-af20-4d8c-8724-1c6ca9127317"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Riya-Kakkar/E-commerce.git&quot;,
+    &quot;accountId&quot;: &quot;03eca734-af20-4d8c-8724-1c6ca9127317&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -197,7 +179,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745243408230</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="updated everything">
+      <option name="closed" value="true" />
+      <created>1745322076660</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1745322076660</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -207,6 +197,7 @@
     <MESSAGE value="4 april update" />
     <MESSAGE value="modify with jwt authentication" />
     <MESSAGE value="modify with product" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify with product" />
+    <MESSAGE value="updated everything" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated everything" />
   </component>
 </project>

@@ -2,11 +2,120 @@ package com.E_commerce.Config;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import javax.crypto.SecretKey;
+import java.util.*;
+import java.util.stream.Collectors;
 
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.util.Date;
+
+@Component
+public class JwtTokenUtil {
+
+    private static final SecretKey SECRET_KEY = Keys.hmacShaKeyFor("my_secret_key_1234567890_riya_kakkar_java_developer".getBytes());
+
+
+    public String generateToken(UserDetails userDetails) {
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("roles", userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList()));
+
+
+        return Jwts.builder()
+                .setSubject(userDetails.getUsername())
+                .setClaims(claims)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public String extractUsername(String token) {
+        return Jwts.parser().
+                setSigningKey(SECRET_KEY).
+                parseClaimsJws(token).
+                getBody().
+                getSubject();
+    }
+
+    public boolean validateToken(String token, UserDetails userDetails) {
+        String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername())  && !isTokenExpired(token));
+    }
+
+    // Check if the token is expired
+    private boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    // Extract expiration date from token
+    private Date extractExpiration(String token) {
+        return Jwts.parser()
+                .setSigningKey(SECRET_KEY)
+                .parseClaimsJws(token)
+                .getBody()
+                .getExpiration();
+    }
+
+
+    public UserDetails extractUserDetailsFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(SECRET_KEY)
+                .parseClaimsJws(token)
+                .getBody();
+
+        String username = claims.getSubject();
+
+        List<String> roles = claims.get("roles", List.class);
+        List<GrantedAuthority> authorities = roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+
+        return new User(username, "", authorities);
+
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 
 @Component
 public class JwtTokenUtil {
@@ -49,3 +158,4 @@ public class JwtTokenUtil {
         }
     }
 }
+*/

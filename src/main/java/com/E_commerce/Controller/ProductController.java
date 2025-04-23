@@ -21,6 +21,7 @@ public class ProductController {
     private ProductService productService;
 
     //firstly you need to register a seller  , then login it ---so go to seller controller
+
     @GetMapping("/getProduct/{productId}")
     public ResponseEntity<Product> getProductById(@PathVariable int productId ) {
             Product product = productService.getProductById(productId);
@@ -31,12 +32,13 @@ public class ProductController {
     public ResponseEntity<ProductRespDTO> getAllProducts(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String category,
-            @RequestParam(required = false) Long price,
+            @RequestParam(required = false) Long priceMin,
+            @RequestParam(required = false) Long priceMax,
             @RequestParam(required = false) Integer stock,
             @RequestParam(required = false, defaultValue = "0") Integer page,
             @RequestParam(required = false, defaultValue = "10") Integer size
     ) {
-        ProductFilterDTO filterDTO = new ProductFilterDTO(name, category, price, stock, page, size);
+        ProductFilterDTO filterDTO = new ProductFilterDTO(name, category,  priceMin, priceMax, stock, page, size);
         Page<Product> products = productService.getAllProducts(filterDTO);
         return ResponseEntity.ok(new ProductRespDTO("Note: As a customer, you can only view products", products));
     }

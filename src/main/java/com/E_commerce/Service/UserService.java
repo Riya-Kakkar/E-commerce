@@ -4,6 +4,7 @@ import com.E_commerce.Config.CustomUserDetails;
 import com.E_commerce.Entity.User;
 import com.E_commerce.Helper.UnauthorizedAccessException;
 import com.E_commerce.Config.JwtTokenUtil;
+import com.E_commerce.Model.AuthRequest;
 import com.E_commerce.Model.UserDTO;
 import com.E_commerce.Model.UserProfileDTO;
 import com.E_commerce.Repository.UserRepository;
@@ -11,11 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,11 +42,11 @@ public class UserService {
     //user registering
     public void registerUser(UserDTO userDTO) {
         if (userRepository.findByUsername(userDTO.username()).isPresent()) {
-            throw new IllegalArgumentException("Username '" + userDTO.username() + "' already exists.");
+            throw new UsernameNotFoundException("Username '" + userDTO.username() + "' already exists.");
         }
 
         if (userRepository.findByEmail(userDTO.email()).isPresent()) {
-            throw new IllegalArgumentException("Email '" + userDTO.email() + "' already exists.");
+            throw new UsernameNotFoundException("Email '" + userDTO.email() + "' already exists.");
         }
 
         String formattedRole = userDTO.role().toUpperCase().startsWith("ROLE_") ? userDTO.role().toUpperCase() : "ROLE_" + userDTO.role().toUpperCase();
@@ -58,21 +61,15 @@ public class UserService {
         userRepository.save(user);
     }
 
-    //user by email --- used in loginUser
-    public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-    }
-
     // user login
-    public String loginUser(String email, String password) {
+    public String loginUser(AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(email, password)
+                new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
         );
 
-        User user = getUserByEmail(email);
-        String token = jwtTokenUtil.generateToken(user.getEmail());
-        System.out.println("Token created for user: " + user.getEmail());
+       UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String token = jwtTokenUtil.generateToken(userDetails);
 
         return token;
     }
@@ -84,16 +81,13 @@ public class UserService {
         }
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        return userDetails.getEmail();
-    }
 
-    //used in order,cart,review
-    public Optional<User> getUserById(int userId) {
-        return userRepository.findById(userId);
+        return userDetails.getUsername();
     }
 
     //get user profile by email
     public UserProfileDTO getUserProfileByEmail(String email) {
+
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
@@ -112,14 +106,9 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
         String encryptedPassword = passwordEncoder.encode(newPassword);
-        user = new User(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                encryptedPassword,
-                user.getRole(),
-                user.isEnable()
-        );
+
+        user.setPassword(encryptedPassword);
+
         userRepository.save(user);
         return user.getEmail();
     }
@@ -135,5 +124,18 @@ public class UserService {
         currentUser.setEnable(true);
         userRepository.save(currentUser);
     }
+
+    public User updateUserRole(int userId, String role) {
+        if (!allowedRoles.contains(role.toUpperCase())) {
+            throw new IllegalArgumentException("Invalid role: " + role);
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        user.setRole(role.toUpperCase());
+        return userRepository.save(user);
+    }
+
 
 }

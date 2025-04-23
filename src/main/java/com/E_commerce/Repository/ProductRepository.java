@@ -13,8 +13,20 @@ import java.util.Optional;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findBySeller(Seller seller);
-    Page<Product> findByNameContaining(String name, Pageable pageable);
+   /* Page<Product> findByNameContaining(String name, Pageable pageable);
     Page<Product> findByPrice(Long price, Pageable pageable);
     Page<Product> findByCategory(String category, Pageable pageable);
+    Page<Product> findByStock(Integer stock, Pageable pageable);*/
+
+
+    Page<Product> findByCategoryAndPriceBetween(String category, Long minPrice, Long maxPrice, Pageable pageable);
+
+    Page<Product> findByNameContainingIgnoreCaseAndPriceBetween(String name, Long minPrice, Long maxPrice, Pageable pageable);
+
     Page<Product> findByStock(Integer stock, Pageable pageable);
+
+    Page<Product> findByPriceBetween(Long minPrice, Long maxPrice, Pageable pageable);
+
+
+
 }

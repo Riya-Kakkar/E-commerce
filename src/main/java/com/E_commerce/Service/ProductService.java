@@ -102,22 +102,23 @@ public class ProductService {
     // products with pagination and filtering
     public Page<Product> getAllProducts(ProductFilterDTO productFilterDTO) {
         Pageable pageable = PageRequest.of(productFilterDTO.page(), productFilterDTO.size());
+
+        Long priceMin = productFilterDTO.priceMin() != null ? productFilterDTO.priceMin() : 0L;
+        Long priceMax = productFilterDTO.priceMax() != null ? productFilterDTO.priceMax() : Long.MAX_VALUE;
+
         Page<Product> products;
 
-        if (productFilterDTO.price() != null && productFilterDTO.price() > 0) {
-            products = productRepository.findByPrice(productFilterDTO.price(), pageable);
+        if (productFilterDTO.category() != null && !productFilterDTO.category().isEmpty()) {
+            products = productRepository.findByCategoryAndPriceBetween(productFilterDTO.category(), priceMin, priceMax, pageable);
         } else if (productFilterDTO.name() != null && !productFilterDTO.name().isEmpty()) {
-            products = productRepository.findByNameContaining(productFilterDTO.name(), pageable);
-        } else if (productFilterDTO.category() != null && !productFilterDTO.category().isEmpty()) {
-            products = productRepository.findByCategory(productFilterDTO.category(), pageable);
+            products = productRepository.findByNameContainingIgnoreCaseAndPriceBetween(productFilterDTO.name(), priceMin, priceMax, pageable);
         } else if (productFilterDTO.stock() != null && productFilterDTO.stock() >= 0) {
-            products = productRepository.findByStock(productFilterDTO.stock() , pageable);
+            products = productRepository.findByStock(productFilterDTO.stock(), pageable);
         } else {
-            products = productRepository.findAll(pageable);
+            products = productRepository.findByPriceBetween(priceMin, priceMax, pageable);
         }
-
         if (products.isEmpty()) {
-            throw new ProductNotFoundException(" No products found matching the given criteria.");
+            throw new ProductNotFoundException("No products found matching the given filters.");
         }
 
         return products;

@@ -25,7 +25,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody AuthRequest authRequest) {
-        String token = userService.loginUser(authRequest.getEmail(), authRequest.getPassword());
+        String token = userService.loginUser(authRequest);
         return ResponseEntity.ok(new AuthResponse(token));
     }
 
@@ -33,6 +33,7 @@ public class UserController {
     public ResponseEntity<UserProfileDTO> getProfile(Authentication authentication) {
         String currentUserEmail = userService.extractEmailFromAuth(authentication);
         UserProfileDTO profile = userService.getUserProfileByEmail(currentUserEmail);
+
         return ResponseEntity.ok(profile);
     }
 

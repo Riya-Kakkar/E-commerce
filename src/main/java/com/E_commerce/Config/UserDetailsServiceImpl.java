@@ -21,15 +21,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new CustomUserDetails(user);
     }
 
-  /*  @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> byUsername = userRepository.findByUsername(username); // Find user by username from the DB
-        if (byUsername.isEmpty()) {
-            throw new UsernameNotFoundException("User not found: " + username);
-        }
-        User user = byUsername.get();
-        CustomUserDetails customUserDetails = new CustomUserDetails(user);
-        System.out.println("Loaded user: " + user.username() + " with role: " + user.role() + " having authorities: " + customUserDetails.getAuthorities());
-        return new CustomUserDetails(user);
-    }*/
 }

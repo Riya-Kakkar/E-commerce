@@ -19,6 +19,7 @@ public record UserDTO (
         @NotBlank(message = "Password cannot be empty!!")
         String password,
 
+        @NotBlank(message = "Role must not be blank")
         String role
 )
 {
