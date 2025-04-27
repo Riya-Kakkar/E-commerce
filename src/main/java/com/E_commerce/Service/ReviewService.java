@@ -11,12 +11,12 @@ import com.E_commerce.Repository.ProductRepository;
 import com.E_commerce.Repository.ReviewRepository;
 import com.E_commerce.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
+import java.time.LocalDateTime;
 import java.util.List;
 
-/*ReviewService (Handles product reviews and ratings)*/
 
 @Service
 public class ReviewService {
@@ -31,9 +31,11 @@ public class ReviewService {
     private ProductRepository productRepository;
 
 
-    public Review addReview(ReviewAddDTO reviewAddDTO) {
+    public Review addReview(ReviewAddDTO reviewAddDTO, Authentication authentication ) {
 
-        User user = userRepository.findById(reviewAddDTO.userId())
+        String username = authentication.getName();
+
+        User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         Product product = productRepository.findById(reviewAddDTO.productId())
                 .orElseThrow(() -> new ProductNotFoundException("Product not found"));
@@ -44,7 +46,7 @@ public class ReviewService {
         }
 
         List<Review> existingReviews = reviewRepository.findByUserIdAndProductId(user.getId(), product.getId());
-        if (existingReviews.isEmpty()) {
+        if (!existingReviews.isEmpty()) {
             throw new IllegalStateException("User has already reviewed this product.");
         }
 
@@ -53,53 +55,47 @@ public class ReviewService {
         review.setProduct(product);
         review.setRating(reviewAddDTO.rating());
         review.setComment(reviewAddDTO.comment());
+        review.setCreatedAt(LocalDateTime.now());
 
         return reviewRepository.save(review);
     }
 
+    public double getAverageRating(int productId) {
+
+        List<Review> reviews = reviewRepository.findByProductId(productId);
+
+        return reviews.stream()
+                .mapToInt(Review::getRating)
+                .average()
+                .orElse(0.0);
+
+    }
+
     // all reviews product
     public List<Review> getProductReviews(int productId) {
+
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         return reviewRepository.findByProduct(product);
     }
 
     //delete by admin
-    public void deleteReview(int reviewId, int adminId) {
-
-        User admin = userRepository.findById(adminId)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        if (!"ADMIN".equals(admin.getRole())) {
-            throw new UnauthorizedAccessException("Only admins can delete reviews.");
-        }
+    public void deleteReview(int reviewId ) {
 
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new ReviewNotFoundException("Review not found"));
 
+        if (!review.isInappropriate()) {
+            throw new IllegalStateException("Review is not inappropriate, cannot delete.");
+        }
+
+
         reviewRepository.delete(review);
     }
 
-    public double calculateAverageRating(int productId) {
+    //mark Review As Inappropriate
+    public Review markReviewAsInappropriate(int reviewId ) {
 
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
-
-        List<Review> reviews = reviewRepository.findByProductId(product.getId());
-
-        if (reviews.isEmpty()) {
-            return 0.0;
-        }
-
-        int totalRating = 0;
-        for (Review review : reviews) {
-            totalRating += review.getRating();
-        }
-        return (double)  totalRating / reviews.size();
-    }
-
-    //optional
-    public Review markReviewAsInappropriate(int reviewId) {
 
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new ReviewNotFoundException("Review not found with ID: " + reviewId));

@@ -25,7 +25,8 @@ public class Order {
 
     private long totalAmount;
 
-    private String status;  //  "PENDING", "SHIPPED", "DELIVERED"
+    @Enumerated(EnumType.STRING)  //stores Enum as string in db
+    private OrderStatus status;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -39,7 +40,7 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
 
-    public Order(User user, long totalAmount, String status) {
+    public Order(User user, long totalAmount, OrderStatus status) {
         this.user = user;
         this.totalAmount = totalAmount;
         this.status = status;

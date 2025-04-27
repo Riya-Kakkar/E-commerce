@@ -5,6 +5,7 @@ import com.E_commerce.Model.ProductFilterDTO;
 import com.E_commerce.Model.ProductRespDTO;
 import com.E_commerce.Model.UserProfileDTO;
 import com.E_commerce.Service.ProductService;
+import com.E_commerce.Service.SellerService;
 import com.E_commerce.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,11 +19,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @PreAuthorize("hasRole('CUSTOMER')")
-@RequestMapping("/e-commerce/products/customer")
+@RequestMapping("/e-commerce/customer")
 public class CustomerController {
 
     @Autowired
-    private ProductService productService;
+    private SellerService sellerService;
 
     @Autowired
     private UserService userService;
@@ -46,7 +47,7 @@ public class CustomerController {
             @RequestParam(required = false, defaultValue = "10") Integer size
     ) {
         ProductFilterDTO filterDTO = new ProductFilterDTO(name, category,  priceMin, priceMax, stock, page, size);
-        Page<Product> products = productService.getAllProducts(filterDTO);
+        Page<Product> products = sellerService.getAllProducts(filterDTO);
         return ResponseEntity.ok(new ProductRespDTO("Note: As a customer, you can only view products", products));
     }
 }

@@ -57,18 +57,19 @@ public class MyConfig {
                         // Public Endpoints
                         .requestMatchers("/e-commerce/user/register", "/e-commerce/user/login").permitAll()
                         .requestMatchers("/e-commerce/reviews/product/**", "/e-commerce/reviews/average/**").permitAll()
+                        .requestMatchers("/e-commerce/products/getProduct/**").permitAll()
 
                         // Authenticated Endpoints
                         .requestMatchers("/e-commerce/user/**").authenticated()
                         .requestMatchers("/e-commerce/orders/**").authenticated()
+                        .requestMatchers("/e-commerce/cart/**").authenticated()
                         .requestMatchers("/e-commerce/reviews/add").authenticated()
-                        .requestMatchers("/e-commerce/admin-dashboard/**").authenticated()
 
                         // Role-based Access Control
                         .requestMatchers("/e-commerce/reviews/markInappropriate/**", "/e-commerce/reviews/delete/**").hasRole("ADMIN")
                         .requestMatchers("/e-commerce/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/e-commerce/products/customer/**").hasRole("CUSTOMER")
-                        .requestMatchers("/e-commerce/products/seller/**").hasRole("SELLER")
+                        .requestMatchers("/e-commerce/customer/**").hasRole("CUSTOMER")
+                        .requestMatchers("/e-commerce/seller/**").hasRole("SELLER")
 
                         // Secure all other endpoints
                         .requestMatchers("/e-commerce/**").authenticated()

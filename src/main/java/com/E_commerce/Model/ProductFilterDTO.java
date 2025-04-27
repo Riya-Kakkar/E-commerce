@@ -4,12 +4,9 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 public record ProductFilterDTO(
-        String name,
-        String category,
-
-
+         String name,
+         String category,
          Long priceMin,
-
          Long priceMax,
 
         @Min(value = 0, message = "Stock must be 0 or more")

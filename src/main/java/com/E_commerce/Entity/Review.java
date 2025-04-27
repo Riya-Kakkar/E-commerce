@@ -1,6 +1,8 @@
 package com.E_commerce.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,20 +27,12 @@ public class Review {
     @JoinColumn(name = "productId", referencedColumnName = "id")
     private Product product;
 
+    @Min(1)
+    @Max(5)
     private int rating;
     private String comment;
     private LocalDateTime createdAt;
-    private boolean isInappropriate;
-
-
-    public Review( User user, Product product, int rating, String comment) {
-        this.user = user;
-        this.product = product;
-        this.rating = rating;
-        this.comment = comment;
-        this.createdAt =  LocalDateTime.now();
-        this.isInappropriate = false;
-    }
+    private boolean isInappropriate ;
 
 
 }

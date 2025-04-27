@@ -1,16 +1,12 @@
 package com.E_commerce.Controller;
 
 import com.E_commerce.Entity.Review;
-import com.E_commerce.Entity.User;
 import com.E_commerce.Model.ReviewAddDTO;
-import com.E_commerce.Repository.UserRepository;
-import com.E_commerce.Service.ProductService;
 import com.E_commerce.Service.ReviewService;
-import com.E_commerce.Service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,45 +19,37 @@ public class ReviewController {
 
     @Autowired
     private ReviewService reviewService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private ProductService productService;
-    @Autowired
-    private UserRepository userRepository;
 
 
     @PostMapping("/add")
-    public ResponseEntity<Review> addReview(@Valid @RequestBody ReviewAddDTO reviewAddDTO) {
-            Review review = reviewService.addReview(reviewAddDTO);
+    public ResponseEntity<Review> addReview(@Valid @RequestBody ReviewAddDTO reviewAddDTO , Authentication authentication) {
+            Review review = reviewService.addReview(reviewAddDTO ,authentication);
             return  ResponseEntity.ok(review) ;
     }
 
 
     @GetMapping("/product/{productId}")
-    public ResponseEntity<List<Review>> getProductReviews(@PathVariable int productId) {
+    public ResponseEntity<List<Review>> getProductReviews(@PathVariable int productId ) {
         return ResponseEntity.ok(reviewService.getProductReviews(productId));
     }
 
+    @GetMapping("/average/{productId}")
+    public ResponseEntity<Double> getAverageRating(@PathVariable int productId ) {
+        double averageRating = reviewService.getAverageRating(productId);
+        return ResponseEntity.ok(averageRating);
+    }
 
     @DeleteMapping("/delete/{reviewId}")
-    public ResponseEntity<String> deleteReview(@PathVariable int reviewId , @RequestParam int adminId) {
+    public ResponseEntity<String> deleteReview(@PathVariable int reviewId ) {
 
-        reviewService.deleteReview(reviewId, adminId);
+        reviewService.deleteReview(reviewId);
 
         return ResponseEntity.ok("Review deleted successfully.");
 
     }
 
-    @GetMapping("/average/{productId}")
-    public ResponseEntity<Double> getAverageRating(@PathVariable int productId) {
-        double averageRating = reviewService.calculateAverageRating(productId);
-        return ResponseEntity.ok(averageRating);
-    }
-
-
-    @PutMapping("/markInappropriate/{reviewId}")
-    public ResponseEntity<Review> markReviewAsInappropriate(@PathVariable int reviewId) {
+    @PostMapping("/markInappropriate/{reviewId}")
+    public ResponseEntity<Review> markReviewAsInappropriate(@PathVariable int reviewId ) {
 
         Review review = reviewService.markReviewAsInappropriate(reviewId);
         return ResponseEntity.ok(review);

@@ -11,6 +11,8 @@ import com.E_commerce.Service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.jaas.AuthorityGranter;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,31 +33,35 @@ public class CartController {
 
     // Add product to cart
     @PostMapping("/add")
-    public ResponseEntity<String> addToCart(@Valid @RequestBody CartAddDTO cartAddDTO) {
-              cartService.addToCart(cartAddDTO);
+    public ResponseEntity<String> addToCart(@Valid @RequestBody CartAddDTO cartAddDTO , Authentication authentication) {
+        String username = authentication.getName();
+        cartService.addProductToCart(cartAddDTO ,username);
             return ResponseEntity.ok("Product added to cart!");
     }
 
 
     // Remove from cart
     @DeleteMapping("/remove")
-    public ResponseEntity<String> removeFromCart(@Valid @RequestBody CartRemoveDTO cartRemoveDTO ) {
-         cartService.removeFromCart(cartRemoveDTO);
+    public ResponseEntity<String> removeFromCart(@Valid @RequestBody CartRemoveDTO cartRemoveDTO , Authentication authentication) {
+        String username = authentication.getName();
+        cartService.removeProductFromCart(cartRemoveDTO , username);
         return ResponseEntity.ok("Product removed from cart");
 
     }
 
     // Get user's cart
     @GetMapping("/getUserCart")
-    public ResponseEntity<List<Cart>> getUserCart( @RequestParam User userId) {
-        List<Cart> cartItems = cartService.getUserCart(userId);
+    public ResponseEntity<List<Cart>> getUserCart(  Authentication authentication) {
+        String username = authentication.getName();
+        List<Cart> cartItems = cartService.getUserCartItems(username);
         return ResponseEntity.ok(cartItems);
     }
 
     // Clear cart
-    @DeleteMapping("/clear/{userId}")
-    public ResponseEntity<String> clearCart(@PathVariable User userId ) {
-            cartService.clearCart(userId);
+    @DeleteMapping("/clear")
+    public ResponseEntity<String> clearCart( Authentication authentication) {
+        String username = authentication.getName();
+        cartService.clearCart(username);
             return ResponseEntity.ok("Cart cleared successfully.");
     }
 

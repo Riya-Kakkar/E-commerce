@@ -30,46 +30,52 @@ public class CartService {
     private ProductRepository productRepository;
 
  // add to cart
-    public Cart addToCart(CartAddDTO cartAddDTO) {
-        User user = userRepository.findById(cartAddDTO.userId())
+    public Cart addProductToCart(CartAddDTO cartAddDTO, String username) {
+        User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         Product product = productRepository.findById(cartAddDTO.productId())
                 .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
         Optional<Cart> existingCart = cartRepository.findByUserAndProduct(user, product);
 
+        Cart cart;
         if (existingCart.isPresent()) {
-            Cart cart = existingCart.get();
+             cart = existingCart.get();
             cart.setQuantity(cart.getQuantity() + cartAddDTO.quantity());
             return cartRepository.save(cart);
         } else {
-            Cart newCart = new Cart(user, product, cartAddDTO.quantity());
-            return cartRepository.save(newCart);
+             cart = new Cart();
+            cart.setUser(user);
+            cart.setProduct(product);
+            cart.setQuantity(cartAddDTO.quantity());
+
         }
+        return cartRepository.save(cart);
     }
 
     // Remove from cart
-    public void removeFromCart(CartRemoveDTO cartRemoveDTO) {
-        User foundUser = userRepository.findById(cartRemoveDTO.userId())
+    public void removeProductFromCart(CartRemoveDTO cartRemoveDTO , String username) {
+        User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        Product foundProduct = productRepository.findById(cartRemoveDTO.productId())
+        Product foundProductId = productRepository.findById(cartRemoveDTO.productId())
                 .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
-         cartRepository.deleteByUserAndProduct(foundUser, foundProduct);
+         cartRepository.deleteByUserAndProduct(user, foundProductId);
 
     }
 
     // Get user cart
-    public List<Cart> getUserCart(User user) {
+    public List<Cart> getUserCartItems(String username) {
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         return cartRepository.findByUser(user);
     }
 
-
     // Clear user's cart
-    public void clearCart(User user) {
-        User foundUser = userRepository.findById(user.getId())
+    public void clearCart(String username) {
+        User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        List<Cart> userCart = cartRepository.findByUser(foundUser);
+        List<Cart> userCart = cartRepository.findByUser(user);
         cartRepository.deleteAll(userCart);
     }
 

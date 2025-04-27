@@ -31,7 +31,10 @@ public class UserController {
 
     @GetMapping("/profile")
     public ResponseEntity<UserProfileDTO> getProfile(Authentication authentication) {
-        String currentUserEmail = userService.extractEmailFromAuth(authentication);
+
+        String currentUserEmail = authentication.getName();
+
+//        String currentUserEmail = userService.extractEmailFromAuth(authentication);
         UserProfileDTO profile = userService.getUserProfileByEmail(currentUserEmail);
 
         return ResponseEntity.ok(profile);

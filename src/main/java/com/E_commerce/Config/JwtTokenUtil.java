@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.security.Key;
 
 
 @Component
@@ -17,30 +18,27 @@ public class JwtTokenUtil {
 
     private static final SecretKey SECRET_KEY = Keys.hmacShaKeyFor("my_secret_key_1234567890_riya_kakkar_java_developer".getBytes());
 
-
     public String generateToken(UserDetails userDetails) {
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put("roles", userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList()));
-
+        userDetails.getAuthorities().forEach(authority -> claims.put("role", authority.getAuthority()));
 
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())
                 .setClaims(claims)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + + 1000 * 60 * 60 * 10))
                 .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public String extractUsername(String token) {
-        return Jwts.parser().
-                setSigningKey(SECRET_KEY).
-                parseClaimsJws(token).
-                getBody().
-                getSubject();
+        return Jwts.parserBuilder()
+                .setSigningKey(SECRET_KEY)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
@@ -55,30 +53,26 @@ public class JwtTokenUtil {
 
     // Extract expiration date from token
     private Date extractExpiration(String token) {
-        return Jwts.parser()
+        return Jwts.parserBuilder()
                 .setSigningKey(SECRET_KEY)
+                .build()
                 .parseClaimsJws(token)
                 .getBody()
                 .getExpiration();
     }
 
-
     public UserDetails extractUserDetailsFromToken(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(SECRET_KEY)
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(SECRET_KEY)  // <-- Ensure same SECRET_KEY here
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
 
         String username = claims.getSubject();
 
-        List<String> roles = claims.get("roles", List.class);
-        List<GrantedAuthority> authorities = roles.stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
-
-        return new User(username, "", authorities);
-
-
+        String role = claims.get("role", String.class);
+        GrantedAuthority authority = new SimpleGrantedAuthority(role);
+        return new User(username, "",  List.of(authority));
     }
 
 }
@@ -158,4 +152,24 @@ public class JwtTokenUtil {
         }
     }
 }
+
+
+public String generateToken(UserDetails userDetails) {
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("roles", userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList()));
+
+
+        return Jwts.builder()
+                .setSubject(userDetails.getUsername())
+                .setClaims(claims)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+
 */

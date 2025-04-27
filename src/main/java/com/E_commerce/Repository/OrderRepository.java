@@ -14,7 +14,10 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     List<Order> findByUser(User user);
 
-    @Query("SELECT SUM(o.totalAmount) FROM Order o WHERE o.status = 'DELIVERED'")
+   /* @Query("SELECT SUM(o.totalAmount) FROM Order o WHERE o.status = 'DELIVERED'")
+    double calculateTotalRevenue();*/
+
+    @Query("SELECT SUM(o.totalAmount) FROM Order o")
     double calculateTotalRevenue();
 }
 

@@ -3,16 +3,14 @@ package com.E_commerce.Service;
 import com.E_commerce.Entity.*;
 import com.E_commerce.Helper.CartNotFoundException;
 import com.E_commerce.Helper.OrderNotFoundException;
+import com.E_commerce.Helper.UnauthorizedAccessException;
 import com.E_commerce.Model.OrderUpdateStatus;
-import com.E_commerce.Repository.CartRepository;
-import com.E_commerce.Repository.OrderItemRepository;
-import com.E_commerce.Repository.OrderRepository;
-import com.E_commerce.Repository.UserRepository;
+import com.E_commerce.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Locale;
 
 @Service
 public class OrderService {
@@ -30,14 +28,19 @@ public class OrderService {
 
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private ProductRepository productRepository;
 
     //place an order
-    public Order placeOrder(User user ) {
-        User foundUser = userRepository.findById(user.getId())
+    public Order placeOrder( Authentication authentication ) {
+        String username = authentication.getName();
+
+        User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        List<Cart> cartItems = cartRepository.findByUser(foundUser);
+
+
+        List<Cart> cartItems = cartRepository.findByUser(user);
 
         if (cartItems.isEmpty()) {
             throw new CartNotFoundException("Cart is empty");
@@ -45,7 +48,7 @@ public class OrderService {
 
         long calculatedTotalAmount = 0;
 
-        Order order = new Order(foundUser, calculatedTotalAmount, OrderStatus.PENDING);
+        Order order = new Order(user, calculatedTotalAmount, OrderStatus.PENDING);
 
         Order savedOrder = orderRepository.save(order);
 
@@ -60,41 +63,51 @@ public class OrderService {
         savedOrder.setTotalAmount(calculatedTotalAmount);
         orderRepository.save(savedOrder);
 
-        cartRepository.deleteByUser(foundUser);
-
+        cartRepository.deleteAll(cartItems);
         return savedOrder;
     }
 
-    public List<Order> getUserOrders(User user) {
-        user = userRepository.findById(user.getId())
+    public List<Order> getUserOrders(  Authentication authentication ) {
+
+        String username = authentication.getName();
+        User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
         return orderRepository.findByUser(user);
     }
 
     // Update order status
-    public void updateOrderStatus(OrderUpdateStatus orderUpdateStatus) {
+    public void updateOrderStatus(OrderUpdateStatus orderUpdateStatus  , Authentication authentication) {
         Order order = orderRepository.findById(orderUpdateStatus.orderId()).orElseThrow(() -> new OrderNotFoundException("Order not found"));
+
+
+       //admin
+        String username = authentication.getName();
+        User user = order.getUser();
+        if (!user.getEmail().equals(username) && !authentication.getAuthorities().stream()
+                .anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"))) {
+            throw new UnauthorizedAccessException("You are not authorized to update the status of this order.");
+        }
 
         String newStatus = orderUpdateStatus.status().toUpperCase();
 
-        //  Validate against allowed status values
-        List<String> validStatuses = List.of(
-                OrderStatus.PENDING,
-                OrderStatus.SHIPPED,
-                OrderStatus.DELIVERED
-        );
+        try {
+            OrderStatus statusEnum = OrderStatus.valueOf(newStatus);
 
-        if (!validStatuses.contains(newStatus)) {
+            if (statusEnum != OrderStatus.PENDING && statusEnum != OrderStatus.SHIPPED && statusEnum != OrderStatus.DELIVERED) {
+                throw new IllegalArgumentException("Invalid order status: " + newStatus);
+            }
+
+            order.setStatus(statusEnum);
+            orderRepository.save(order);
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Invalid order status: " + newStatus);
         }
-
-        order.setStatus(newStatus);
-        orderRepository.save(order);
     }
 
-
-//optional
+//use in  review service
     public boolean checkIfUserHasPurchasedProduct(User user, Product product) {
+
         List<Order> orders = orderRepository.findByUser(user);
 
         for (Order order : orders) {

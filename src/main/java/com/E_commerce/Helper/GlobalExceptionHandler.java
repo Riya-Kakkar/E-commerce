@@ -1,7 +1,10 @@
 package com.E_commerce.Helper;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.jsonwebtoken.ExpiredJwtException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -80,10 +83,23 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<String> handleAccessDeniedException(AccessDeniedException ex) {
+    public ResponseEntity<String> handleAccessDeniedException(AccessDeniedException ex , HttpServletRequest request) {
+
+        String message = "Access denied: You do not have permission to perform this action.";
+
+        // Customize based on the URL
+        String requestURI = request.getRequestURI();
+
+        if (requestURI.contains("/e-commerce/reviews/delete")) {
+            message = "Only admins can delete reviews.";
+        } else if (requestURI.contains("/e-commerce/reviews/markInappropriate")) {
+            message = "Only admins can mark reviews as inappropriate.";
+        }
+
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
-                .body("Access denied: Customers are not allowed to perform this action.");
+                .body(message);
+
     }
 
     @ExceptionHandler(IOException.class)
@@ -101,10 +117,28 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(InvalidOrderStatusException.class)
+    public ResponseEntity<String> handleInvalidOrderStatus(InvalidOrderStatusException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
     @ExceptionHandler(ReviewNotFoundException.class)
     public ResponseEntity<String> handleReviewNotFound(ReviewNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(JsonProcessingException.class)
+    public ResponseEntity<String> handleJsonProcessingException(JsonProcessingException ex) {
+        return ResponseEntity.badRequest().body("Invalid product data format: " + ex.getOriginalMessage());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<String> handleDatabaseErrors(DataIntegrityViolationException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Database error: " + ex.getMessage());
+    }
+
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGenericException(Exception ex) {   //all other exception
