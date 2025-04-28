@@ -9,8 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.security.Key;
+
 
 
 @Component
@@ -63,13 +62,12 @@ public class JwtTokenUtil {
 
     public UserDetails extractUserDetailsFromToken(String token) {
         Claims claims = Jwts.parserBuilder()
-                .setSigningKey(SECRET_KEY)  // <-- Ensure same SECRET_KEY here
+                .setSigningKey(SECRET_KEY)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
 
         String username = claims.getSubject();
-
         String role = claims.get("role", String.class);
         GrantedAuthority authority = new SimpleGrantedAuthority(role);
         return new User(username, "",  List.of(authority));

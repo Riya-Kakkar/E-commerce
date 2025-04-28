@@ -6,8 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 public record ReviewAddDTO(
 
         @Min(1)
-        int userId,
-        @Min(1)
         int productId,
         @Min(1)
         int rating,

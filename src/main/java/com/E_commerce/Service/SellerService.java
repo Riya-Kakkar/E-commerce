@@ -7,6 +7,7 @@ import com.E_commerce.Helper.ProductNotFoundException;
 import com.E_commerce.Helper.UnauthorizedAccessException;
 import com.E_commerce.Model.ProductFilterDTO;
 import com.E_commerce.Model.ProductRequestDTO;
+import com.E_commerce.Model.ProductRespDTO;
 import com.E_commerce.Model.SellerProductDTO;
 import com.E_commerce.Repository.ProductRepository;
 import com.E_commerce.Repository.UserRepository;
@@ -53,7 +54,7 @@ public class SellerService {
 
         String randomID = UUID.randomUUID().toString();
         String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
-        String fileName = randomID + fileExtension;
+        String fileName = randomID + "_" + originalFilename + fileExtension;
 
 
         //full path
@@ -83,7 +84,8 @@ public class SellerService {
 
         Product product = productRepository.findById(sellerProductDTO.productId()).orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
-        if (!product.getSeller().getUsername().equals(username)) {
+
+        if (!product.getSeller().getEmail().equals(username)) {
             throw new UnauthorizedAccessException("You are not allowed to update this product");
         }
         product.setName(sellerProductDTO.name());
@@ -92,6 +94,13 @@ public class SellerService {
         product.setStock(sellerProductDTO.stock());
         product.setCategory(sellerProductDTO.category());
 
+        if (sellerProductDTO.image() != null && !sellerProductDTO.image().isEmpty()) {
+            product.setImageUrl(sellerProductDTO.image());
+        } else if (product.getImageUrl() != null) {
+            product.setImageUrl(product.getImageUrl());
+        }
+
+
         return productRepository.save(product);
     }
 
@@ -99,7 +108,7 @@ public class SellerService {
     public void deleteProduct(int productId, String username)  {
         Product product = productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
-        if (!product.getSeller().getUsername().equals(username)) {
+        if (!product.getSeller().getEmail().equals(username)) {
             throw new UnauthorizedAccessException("Unauthorized to delete this product");
         }
 
@@ -107,7 +116,7 @@ public class SellerService {
     }
 
     // products with pagination and filtering
-    public Page<Product> getAllProducts(ProductFilterDTO productFilterDTO) {
+    public ProductRespDTO getAllProducts(ProductFilterDTO productFilterDTO) {
         Pageable pageable = PageRequest.of(productFilterDTO.page(), productFilterDTO.size());
 
         Long priceMin = productFilterDTO.priceMin() != null ? productFilterDTO.priceMin() : 0L;
@@ -128,7 +137,14 @@ public class SellerService {
             throw new ProductNotFoundException("No products found matching the given filters.");
         }
 
-        return products;
+        return new ProductRespDTO(
+                "Product Details are :-",
+                products.getContent(),
+                products.getNumber(),
+                products.getSize(),
+                products.getTotalElements(),
+                products.getTotalPages()
+        );
 
     }
 

@@ -1,5 +1,6 @@
 package com.E_commerce.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -21,10 +22,12 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id")
+    @JsonIgnore
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "productId", referencedColumnName = "id")
+    @JsonIgnore
     private Product product;
 
     @Min(1)

@@ -74,17 +74,6 @@ public class UserService {
         return token;
     }
 
-   // used in userController-- getProfile , changePassword  , updateProfile
-    public String extractEmailFromAuth(Authentication authentication) {
-        if (authentication == null) {
-            throw new UnauthorizedAccessException("User is not authenticated");
-        }
-
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-
-        return userDetails.getUsername();
-    }
-
     //get user profile by email
     public UserProfileDTO getUserProfileByEmail(String email) {
 

@@ -58,8 +58,8 @@ public class AdminController {
     //for admin dashboard
     @GetMapping("/dashboard")
     public ResponseEntity<UserProfileDTO> getAdminDashboard(Authentication authentication) {
-        String currentUserEmail = userService.extractEmailFromAuth(authentication);
-        UserProfileDTO profile = userService.getUserProfileByEmail(currentUserEmail);
+        String username = authentication.getName();
+        UserProfileDTO profile = userService.getUserProfileByEmail(username);
         return ResponseEntity.ok(profile);
     }
 

@@ -1,11 +1,14 @@
 package com.E_commerce.Controller;
 
+import com.E_commerce.Entity.User;
 import com.E_commerce.Model.*;
+import com.E_commerce.Repository.UserRepository;
 import com.E_commerce.Service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 //localhost:9090/e-commerce/user
@@ -16,6 +19,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody UserDTO userDto) {
@@ -42,15 +47,16 @@ public class UserController {
 
     @PostMapping("/change-password")
     public ResponseEntity<String> changePassword(@Valid @RequestBody PasswordChangeDTO passwordChangeDTO, Authentication authentication) {
-        String currentUserEmail = userService.extractEmailFromAuth(authentication);
-        String userChangedPassword = userService.changePasswordByEmail(currentUserEmail, passwordChangeDTO.password());
+        String username = authentication.getName();
+
+        String userChangedPassword = userService.changePasswordByEmail(username, passwordChangeDTO.password());
         return ResponseEntity.ok("Password updated successfully for Email: " + userChangedPassword);
     }
 
     @PutMapping("/update-profile")
     public ResponseEntity<String> updateProfile(@Valid @RequestBody UserDTO userDTO, Authentication authentication) {
-        String currentUserEmail = userService.extractEmailFromAuth(authentication);
-        userService.updateUserProfileByEmail(currentUserEmail, userDTO);
+        String username = authentication.getName();
+        userService.updateUserProfileByEmail(username, userDTO);
         return ResponseEntity.ok("Profile updated successfully.");
     }
 

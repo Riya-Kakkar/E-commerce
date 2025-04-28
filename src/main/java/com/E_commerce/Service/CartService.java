@@ -5,12 +5,10 @@ import com.E_commerce.Entity.Product;
 import com.E_commerce.Entity.User;
 import com.E_commerce.Helper.ProductNotFoundException;
 import com.E_commerce.Model.CartAddDTO;
-import com.E_commerce.Model.CartRemoveDTO;
 import com.E_commerce.Repository.CartRepository;
 import com.E_commerce.Repository.ProductRepository;
 import com.E_commerce.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -54,14 +52,12 @@ public class CartService {
     }
 
     // Remove from cart
-    public void removeProductFromCart(CartRemoveDTO cartRemoveDTO , String username) {
-        User user = userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        Product foundProductId = productRepository.findById(cartRemoveDTO.productId())
-                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+    public void removeProductFromCart(int productId , String username) {
 
-         cartRepository.deleteByUserAndProduct(user, foundProductId);
-
+        Cart cart = cartRepository.findByProductIdAndUserEmail(productId, username);
+        if (cart != null) {
+            cartRepository.delete(cart);
+        }
     }
 
     // Get user cart

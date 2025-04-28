@@ -1,5 +1,6 @@
 package com.E_commerce.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,7 +38,8 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> products;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order" , cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<OrderItem> orderItems;
 
     public Order(User user, long totalAmount, OrderStatus status) {

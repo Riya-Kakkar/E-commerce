@@ -20,13 +20,11 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-
     @PostMapping("/add")
     public ResponseEntity<Review> addReview(@Valid @RequestBody ReviewAddDTO reviewAddDTO , Authentication authentication) {
             Review review = reviewService.addReview(reviewAddDTO ,authentication);
             return  ResponseEntity.ok(review) ;
     }
-
 
     @GetMapping("/product/{productId}")
     public ResponseEntity<List<Review>> getProductReviews(@PathVariable int productId ) {
@@ -34,9 +32,18 @@ public class ReviewController {
     }
 
     @GetMapping("/average/{productId}")
-    public ResponseEntity<Double> getAverageRating(@PathVariable int productId ) {
+    public ResponseEntity<String> getAverageRating(@PathVariable int productId ) {
         double averageRating = reviewService.getAverageRating(productId);
-        return ResponseEntity.ok(averageRating);
+        String message = "The average rating of this product is " + averageRating;
+        return ResponseEntity.ok(message);
+    }
+
+
+    @PostMapping("/markInappropriate/{reviewId}")
+    public ResponseEntity<Review> markReviewAsInappropriate(@PathVariable int reviewId ) {
+
+        Review review = reviewService.markReviewAsInappropriate(reviewId);
+        return ResponseEntity.ok(review);
     }
 
     @DeleteMapping("/delete/{reviewId}")
@@ -46,13 +53,6 @@ public class ReviewController {
 
         return ResponseEntity.ok("Review deleted successfully.");
 
-    }
-
-    @PostMapping("/markInappropriate/{reviewId}")
-    public ResponseEntity<Review> markReviewAsInappropriate(@PathVariable int reviewId ) {
-
-        Review review = reviewService.markReviewAsInappropriate(reviewId);
-        return ResponseEntity.ok(review);
     }
 
 }

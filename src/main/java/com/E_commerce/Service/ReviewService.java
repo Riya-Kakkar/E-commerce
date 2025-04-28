@@ -79,6 +79,17 @@ public class ReviewService {
         return reviewRepository.findByProduct(product);
     }
 
+    //mark Review As Inappropriate
+    public Review markReviewAsInappropriate(int reviewId ) {
+
+
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new ReviewNotFoundException("Review not found with ID: " + reviewId));
+
+            review.setInappropriate(true);
+            return reviewRepository.save(review);
+    }
+
     //delete by admin
     public void deleteReview(int reviewId ) {
 
@@ -92,16 +103,4 @@ public class ReviewService {
 
         reviewRepository.delete(review);
     }
-
-    //mark Review As Inappropriate
-    public Review markReviewAsInappropriate(int reviewId ) {
-
-
-        Review review = reviewRepository.findById(reviewId)
-                .orElseThrow(() -> new ReviewNotFoundException("Review not found with ID: " + reviewId));
-
-            review.setInappropriate(true);
-            return reviewRepository.save(review);
-    }
-
 }

@@ -30,8 +30,8 @@ public class CustomerController {
 
     @GetMapping("/profile")
     public ResponseEntity<UserProfileDTO> getCustomerProfile(Authentication authentication) {
-        String currentUserEmail = userService.extractEmailFromAuth(authentication);
-        UserProfileDTO profile = userService.getUserProfileByEmail(currentUserEmail);
+        String username = authentication.getName();
+        UserProfileDTO profile = userService.getUserProfileByEmail(username);
         return ResponseEntity.ok(profile);
     }
 
@@ -47,7 +47,7 @@ public class CustomerController {
             @RequestParam(required = false, defaultValue = "10") Integer size
     ) {
         ProductFilterDTO filterDTO = new ProductFilterDTO(name, category,  priceMin, priceMax, stock, page, size);
-        Page<Product> products = sellerService.getAllProducts(filterDTO);
-        return ResponseEntity.ok(new ProductRespDTO("Note: As a customer, you can only view products", products));
+        ProductRespDTO products = sellerService.getAllProducts(filterDTO);
+        return ResponseEntity.ok(products);
     }
 }

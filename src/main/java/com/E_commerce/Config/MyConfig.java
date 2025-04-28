@@ -1,5 +1,6 @@
 package com.E_commerce.Config;
 
+import com.E_commerce.Helper.CustomAccessDeniedHandler;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,8 @@ public class MyConfig {
 
     @Autowired
     private JwtAuthenticationFilter jwtFilter;
+    @Autowired
+    private CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
     public UserDetailsService getUserDetailsService() {
@@ -67,6 +70,7 @@ public class MyConfig {
 
                         // Role-based Access Control
                         .requestMatchers("/e-commerce/reviews/markInappropriate/**", "/e-commerce/reviews/delete/**").hasRole("ADMIN")
+                        .requestMatchers("/e-commerce/orders/update-status/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/e-commerce/admin/**").hasRole("ADMIN")
                         .requestMatchers("/e-commerce/customer/**").hasRole("CUSTOMER")
                         .requestMatchers("/e-commerce/seller/**").hasRole("SELLER")
@@ -77,7 +81,11 @@ public class MyConfig {
                 )
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(exception -> exception
+                        .accessDeniedHandler(customAccessDeniedHandler)
+                );
+
 
         return http.build();
     }

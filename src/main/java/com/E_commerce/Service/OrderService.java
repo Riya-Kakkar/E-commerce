@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,8 +19,6 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
-    @Autowired
-    private CartService cartService;
 
     @Autowired
     private CartRepository cartRepository;
@@ -28,40 +28,39 @@ public class OrderService {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private ProductRepository productRepository;
 
     //place an order
     public Order placeOrder( Authentication authentication ) {
         String username = authentication.getName();
-
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-
 
         List<Cart> cartItems = cartRepository.findByUser(user);
 
         if (cartItems.isEmpty()) {
-            throw new CartNotFoundException("Cart is empty");
+            throw new CartNotFoundException(" Your Cart is empty");
         }
 
         long calculatedTotalAmount = 0;
 
         Order order = new Order(user, calculatedTotalAmount, OrderStatus.PENDING);
 
-        Order savedOrder = orderRepository.save(order);
+        List<OrderItem> orderItems = new ArrayList<>();
 
         for (Cart cartItem : cartItems) {
             long price = cartItem.getProduct().getPrice();
-            OrderItem orderItem = new OrderItem(cartItem.getProduct(), savedOrder, cartItem.getQuantity(), price);
-            orderItemRepository.save(orderItem);
+            OrderItem orderItem = new OrderItem(cartItem.getProduct(), order, cartItem.getQuantity(), price);
 
+            orderItems.add(orderItem);
             calculatedTotalAmount += price * cartItem.getQuantity();
         }
 
-        savedOrder.setTotalAmount(calculatedTotalAmount);
-        orderRepository.save(savedOrder);
+        order.setTotalAmount(calculatedTotalAmount);
+        order.setOrderItems(orderItems);
+
+        Order savedOrder = orderRepository.save(order);
+
+        orderItemRepository.saveAll(orderItems);
 
         cartRepository.deleteAll(cartItems);
         return savedOrder;
@@ -80,13 +79,13 @@ public class OrderService {
     public void updateOrderStatus(OrderUpdateStatus orderUpdateStatus  , Authentication authentication) {
         Order order = orderRepository.findById(orderUpdateStatus.orderId()).orElseThrow(() -> new OrderNotFoundException("Order not found"));
 
-
        //admin
-        String username = authentication.getName();
-        User user = order.getUser();
-        if (!user.getEmail().equals(username) && !authentication.getAuthorities().stream()
-                .anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"))) {
-            throw new UnauthorizedAccessException("You are not authorized to update the status of this order.");
+
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"));
+
+        if (!isAdmin) {
+            throw new UnauthorizedAccessException("Only admins can update order status.");
         }
 
         String newStatus = orderUpdateStatus.status().toUpperCase();

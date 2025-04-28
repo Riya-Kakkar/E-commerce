@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import com.E_commerce.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +48,8 @@ public class SellerController {
 
         String currentUsername = authentication.getName();
         Product updatedProduct = sellerService.updateProduct(sellerProductDTO, currentUsername);
-        return ResponseEntity.ok("Your Product is Updated... " +updatedProduct);
+        UpdatedProductResponse response = new UpdatedProductResponse(updatedProduct);
+        return ResponseEntity.ok(response.toString());
     }
 
     //  to delete a product
@@ -71,8 +71,8 @@ public class SellerController {
             @RequestParam(required = false, defaultValue = "10") Integer size
     ) {
         ProductFilterDTO filterDTO = new ProductFilterDTO(name, category,  priceMin, priceMax, stock, page, size);
-        Page<Product> products = sellerService.getAllProducts(filterDTO);
-        return ResponseEntity.ok(new ProductRespDTO("Note: As a customer, you can only view products", products));
+        ProductRespDTO products = sellerService.getAllProducts(filterDTO);
+        return ResponseEntity.ok(products);
     }
 
 }

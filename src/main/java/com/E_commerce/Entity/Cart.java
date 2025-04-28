@@ -25,10 +25,4 @@ public class Cart {
 
     private int quantity;
 
-    public Cart(User user, Product product, int quantity) {
-        this.user = user;
-        this.product = product;
-        this.quantity = quantity;
-    }
-
 }

@@ -94,6 +94,8 @@ public class GlobalExceptionHandler {
             message = "Only admins can delete reviews.";
         } else if (requestURI.contains("/e-commerce/reviews/markInappropriate")) {
             message = "Only admins can mark reviews as inappropriate.";
+        }else if (requestURI.contains("/e-commerce/orders/update-status")) {
+            message = "Only admins can update the order status.";
         }
 
         return ResponseEntity
