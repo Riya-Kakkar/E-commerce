@@ -1,0 +1,973 @@
+{
+	"info": {
+		"_postman_id": "c36a1e0e-ce90-4b57-8b51-734c6b6174a9",
+		"name": "E-commerce",
+		"description": "common starting url for all are -- localhost:9090/e-commerce/\n\n```\nlocalhost:9090/e-commerce/\n\n ```",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43002772"
+	},
+	"item": [
+		{
+			"name": "Authentication and User Management",
+			"item": [
+				{
+					"name": "User Registration",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"username\": \"user3\",\r\n   \"password\": \"user3\",\r\n   \"email\" : \"user3@gmail.com\",\r\n   \"role\" : \"customer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/e-commerce/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user1@gmail.com\",\n  \"password\": \"user1\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/e-commerce/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Profile",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9TRUxMRVIiLCJzdWIiOiJ1c2VyMkBnbWFpbC5jb20iLCJpYXQiOjE3NDU4MTU2MTYsImV4cCI6MTc0NTg1MTYxNn0.5i_M_7lkyp9_j9SkXPzwuf2SbULbWA5J4sr2ebgbYk0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:9090/e-commerce/user/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9TRUxMRVIiLCJzdWIiOiJ1c2VyMkBnbWFpbC5jb20iLCJpYXQiOjE3NDU4MTU2MTYsImV4cCI6MTc0NTg1MTYxNn0.5i_M_7lkyp9_j9SkXPzwuf2SbULbWA5J4sr2ebgbYk0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user2@gmail.com\",\n  \"password\": \"user2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/e-commerce/user/change-password",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"user",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9TRUxMRVIiLCJzdWIiOiJ1c2VyMkBnbWFpbC5jb20iLCJpYXQiOjE3NDU4MTU2MTYsImV4cCI6MTc0NTg1MTYxNn0.5i_M_7lkyp9_j9SkXPzwuf2SbULbWA5J4sr2ebgbYk0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"user2\",\r\n  \"email\": \"user2@gmail.com\",\r\n  \"password\": \"user2\",\r\n  \"role\": \"seller\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/e-commerce/user/update-profile",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"user",
+								"update-profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9DVVNUT01FUiIsImlhdCI6MTc0NTQwNjgxMiwiZXhwIjoxNzQ1NDQyODEyfQ.4xlDEX2Q6VhiOrYvyQHco8Iy4EmyHTpaWvrnhBobEhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/user/logout",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "common url for user management --- localhost:9090/e-commerce/user\n\nneeds login in ---------> get user profile , change password , update"
+		},
+		{
+			"name": "Seller Role",
+			"item": [
+				{
+					"name": "Create Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9TRUxMRVIiLCJzdWIiOiJ1c2VyMkBnbWFpbC5jb20iLCJpYXQiOjE3NDU4MTU2MTYsImV4cCI6MTc0NTg1MTYxNn0.5i_M_7lkyp9_j9SkXPzwuf2SbULbWA5J4sr2ebgbYk0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "product",
+									"value": "{\n    \"name\": \"iPhone\",\n    \"description\": \"iPhone - Premium Smartphone with Cutting-Edge Technology\",\n    \"price\": 1200,\n    \"category\": \"PHONE\",\n    \"stock\": 10\n}\n",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/python/Downloads/phone.avif"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:9090/e-commerce/seller/create",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"seller",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9TRUxMRVIiLCJzdWIiOiJ1c2VyMkBnbWFpbC5jb20iLCJpYXQiOjE3NDU4MTU2MTYsImV4cCI6MTc0NTg1MTYxNn0.5i_M_7lkyp9_j9SkXPzwuf2SbULbWA5J4sr2ebgbYk0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productId\": 102,\n  \"name\": \"I-Phone\",\n  \"description\": \"iPhone - Premium Smartphone with Cutting-Edge Technology \",\n  \"price\": 1200,\n  \"stock\": 20,\n  \"category\": \"Phone\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/e-commerce/seller/update",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"seller",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9TRUxMRVIiLCJzdWIiOiJ1c2VyMkBnbWFpbC5jb20iLCJpYXQiOjE3NDU4MTU2MTYsImV4cCI6MTc0NTg1MTYxNn0.5i_M_7lkyp9_j9SkXPzwuf2SbULbWA5J4sr2ebgbYk0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/seller/delete/53",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"seller",
+								"delete",
+								"53"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Seller Products by Username",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9TRUxMRVIiLCJzdWIiOiJ1c2VyMkBnbWFpbC5jb20iLCJpYXQiOjE3NDU4MTU2MTYsImV4cCI6MTc0NTg1MTYxNn0.5i_M_7lkyp9_j9SkXPzwuf2SbULbWA5J4sr2ebgbYk0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/seller/getAllProducts",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"seller",
+								"getAllProducts"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "common url for seller ----- localhost:9090/e-commerce/products/sellers"
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Customer Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9DVVNUT01FUiIsInN1YiI6InVzZXIzQGdtYWlsLmNvbSIsImlhdCI6MTc0NTgyNDY2MSwiZXhwIjoxNzQ1ODYwNjYxfQ.r7DEB75dSM-AZChWN595Si6w6sayyG0Md6N4CyU299k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/customer/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"customer",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9DVVNUT01FUiIsInN1YiI6InVzZXIzQGdtYWlsLmNvbSIsImlhdCI6MTc0NTgyNDY2MSwiZXhwIjoxNzQ1ODYwNjYxfQ.r7DEB75dSM-AZChWN595Si6w6sayyG0Md6N4CyU299k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/customer/getAllProducts",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"customer",
+								"getAllProducts"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "common role for customer -- localhost:9090/e-commerce/products/customers"
+		},
+		{
+			"name": "Cart Management",
+			"item": [
+				{
+					"name": "Add Item to Cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9DVVNUT01FUiIsInN1YiI6InVzZXIzQGdtYWlsLmNvbSIsImlhdCI6MTc0NTgyNDY2MSwiZXhwIjoxNzQ1ODYwNjYxfQ.r7DEB75dSM-AZChWN595Si6w6sayyG0Md6N4CyU299k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productId\": 52,\n  \"quantity\": 6\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/e-commerce/cart/add",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"cart",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9DVVNUT01FUiIsInN1YiI6InVzZXIzQGdtYWlsLmNvbSIsImlhdCI6MTc0NTgyNDY2MSwiZXhwIjoxNzQ1ODYwNjYxfQ.r7DEB75dSM-AZChWN595Si6w6sayyG0Md6N4CyU299k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/cart/getUserCart",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"cart",
+								"getUserCart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Item from Cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9DVVNUT01FUiIsInN1YiI6InVzZXIzQGdtYWlsLmNvbSIsImlhdCI6MTc0NTgyNDY2MSwiZXhwIjoxNzQ1ODYwNjYxfQ.r7DEB75dSM-AZChWN595Si6w6sayyG0Md6N4CyU299k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/cart/remove/102",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"cart",
+								"remove",
+								"102"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clear Cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9DVVNUT01FUiIsInN1YiI6InVzZXIzQGdtYWlsLmNvbSIsImlhdCI6MTc0NTgyNDY2MSwiZXhwIjoxNzQ1ODYwNjYxfQ.r7DEB75dSM-AZChWN595Si6w6sayyG0Md6N4CyU299k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/cart/clear",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"cart",
+								"clear"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "common url for cart -- localhost:9090/e-commerce/cart\n\n```\nlocalhost:9090/e-commerce/cart\n\n ```"
+		},
+		{
+			"name": "Order Management",
+			"item": [
+				{
+					"name": "Place Order by user Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9DVVNUT01FUiIsInN1YiI6InVzZXIzQGdtYWlsLmNvbSIsImlhdCI6MTc0NTgyODg0NiwiZXhwIjoxNzQ1ODY0ODQ2fQ.XpKfTTG4MZ4Z92uwN58otr7pT9Le6ZoAe99ktrrvgaU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/orders/place",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"orders",
+								"place"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9DVVNUT01FUiIsInN1YiI6InVzZXIzQGdtYWlsLmNvbSIsImlhdCI6MTc0NTgyODg0NiwiZXhwIjoxNzQ1ODY0ODQ2fQ.XpKfTTG4MZ4Z92uwN58otr7pT9Le6ZoAe99ktrrvgaU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/orders/getUserOrders",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"orders",
+								"getUserOrders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order Status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6InVzZXIxQGdtYWlsLmNvbSIsImlhdCI6MTc0NTgzMjExMiwiZXhwIjoxNzQ1ODY4MTEyfQ.Am9Mux3jHVSzJwyiTuCHHnPOpk5rbVWyiTHIyVMndgQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orderId\": 1,\n    \"status\": \"Shipped\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/e-commerce/orders/update-status",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"orders",
+								"update-status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews & Ratings management",
+			"item": [
+				{
+					"name": "Add Review",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9DVVNUT01FUiIsInN1YiI6InVzZXIzQGdtYWlsLmNvbSIsImlhdCI6MTc0NTgzMjYxMiwiZXhwIjoxNzQ1ODY4NjEyfQ.tF4vBU9rIZXdWPKBM5TPw_GdzYiIaNarhqQXwLGKRQw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productId\": 102,\n    \"rating\": 1,\n    \"comment\": \"Very bad product!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/e-commerce/reviews/add",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"reviews",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product Reviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/reviews/product/102",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"reviews",
+								"product",
+								"102"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Average Rating",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/reviews/average/52",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"reviews",
+								"average",
+								"52"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mark Review Inappropriate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6InVzZXIxQGdtYWlsLmNvbSIsImlhdCI6MTc0NTgzNDg5NiwiZXhwIjoxNzQ1ODcwODk2fQ.wHYVwyax4UZneOVL6-rAFBXjdQXjPoR8iM8FCGGZMyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/reviews/markInappropriate/2",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"reviews",
+								"markInappropriate",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Review",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6InVzZXIxQGdtYWlsLmNvbSIsImlhdCI6MTc0NTgzNDg5NiwiZXhwIjoxNzQ1ODcwODk2fQ.wHYVwyax4UZneOVL6-rAFBXjdQXjPoR8iM8FCGGZMyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/reviews/delete/2",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"reviews",
+								"delete",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "common url for review ---- localhost:9090/e-commerce/reviews"
+		},
+		{
+			"name": "Admin Role",
+			"item": [
+				{
+					"name": "Admin Dashboard",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6InVzZXIxQGdtYWlsLmNvbSIsImlhdCI6MTc0NTgzNDg5NiwiZXhwIjoxNzQ1ODcwODk2fQ.wHYVwyax4UZneOVL6-rAFBXjdQXjPoR8iM8FCGGZMyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/admin/dashboard",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"admin",
+								"dashboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6InVzZXIxQGdtYWlsLmNvbSIsImlhdCI6MTc0NTgzNDg5NiwiZXhwIjoxNzQ1ODcwODk2fQ.wHYVwyax4UZneOVL6-rAFBXjdQXjPoR8iM8FCGGZMyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/admin/user",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"admin",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6InVzZXIxQGdtYWlsLmNvbSIsImlhdCI6MTc0NTgzNDg5NiwiZXhwIjoxNzQ1ODcwODk2fQ.wHYVwyax4UZneOVL6-rAFBXjdQXjPoR8iM8FCGGZMyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/admin/user/{id}/role",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"admin",
+								"user",
+								"{id}",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin stats",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6InVzZXIxQGdtYWlsLmNvbSIsImlhdCI6MTc0NTgzNDg5NiwiZXhwIjoxNzQ1ODcwODk2fQ.wHYVwyax4UZneOVL6-rAFBXjdQXjPoR8iM8FCGGZMyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/admin/stats",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"admin",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/e-commerce/admin/user/{id}",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"e-commerce",
+								"admin",
+								"user",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "common url for admin -- localhost:9090/e-commerce/admin"
+		}
+	]
+}
