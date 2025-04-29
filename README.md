@@ -5,7 +5,7 @@
 # Project Features
 
 - User Registration and Login with JWT Authentication
-- Role-Based Access Control (Admin/User(CUSTOMER,SELLER))
+- Role-Based Access Control (Admin/User(Customer,Seller))
 - Product & Inventory Management 
 - Order & Cart Management
 - Review and Rating System
