@@ -1,6 +1,6 @@
 #  E-Commerce Spring Boot Application
 
-This project is a backend API for an E-Commerce platform developed using :- Java , Spring Boot , Spring Security , JWT , and MySQL.
+- This project is a backend API for an E-Commerce platform developed using :- Java , Spring Boot , Spring Security , JWT , and MySQL.
 
 # Project Features
 
@@ -15,7 +15,7 @@ This project is a backend API for an E-Commerce platform developed using :- Java
 - Postman Collection for easy API testing
 
 # Project Structure
-
+<pre> <code>
 E-commerce/                                                 // root directory of project
 ├── idea/                                                   // IntelliJ IDEA-related config files (e.g., project settings)
 ├── images/                                                 //  stores images used in documentation     
@@ -36,38 +36,46 @@ E-commerce/                                                 // root directory of
      └── application.properties                          //Defines application-level properties (e.g., DB config, ports, security).
  └── test/ 
 ├── target/ 
- --- mvnw
- --- mvnw.cmd
+├──  mvnw
+├── mvnw.cmd
 ├── pom.xml                                          //Defines dependencies, plugins, and project metadata.
- └── README.md                                       //Use this to describe project purpose, setup, usage, and API guide.
-EXternal libraries/                                 //Handled by IDE; lists all Maven dependencies.
+├──README.md                                     //Handled by IDE; lists all Maven dependencies.
+</code> </pre>
 
 # Technologies Used
 
-- Java 17
+- Java 17+
 - Spring Boot
 - Spring Security
 - JWT (JSON Web Token)
 - Maven
-- MySQL
+- MySQL Workbench
 - Postman
+
+# Dependencies 
+
+-  dependencies for this project go through :- [pom.xml](pom.xml)
 
 # Getting Started
 
------
- Open the project in your IDE: IntelliJ IDEA (recommended) or Eclipse
-    -If you are using IntelliJ IDEA, make sure the IDE opens project as Maven and recognizes the project as a Spring Boot project. 
-----    
+
+- Open the project in your IDE: IntelliJ IDEA (recommended) or Eclipse
+    
+   - If you are using IntelliJ IDEA, make sure the IDE opens project as Maven and recognizes the project as a Spring Boot project. 
+ 
 
 ## 1. Clone the Repository
 
 git clone https://github.com/Riya-Kakkar/E-commerce.git
-cd E-commerce
 
 ## 2. Configure the Database
 
-MySQL workbench s used as the database for this project. The database connection can be configured in the src/main/resources/application.properties file, update with following properties:
---------
+- MySQL workbench s used as the database for this project. The database connection can be configured in the [application.properties](src/main/resources/application.properties), update with following properties:
+
+
+- Make sure the "e_commerce" database exists in your MySQL server.
+
+----
 spring.application.name=E-commerce
 
 spring.devtools.restart.enabled=true
@@ -89,40 +97,37 @@ spring.servlet.multipart.max-file-size=-1
 spring.servlet.multipart.max-request-size=-1
 
 project.image=images/
---------
 
-Make sure the "ecommerce" database exists in your MySQL server.
+----
+
 
 ## 3. Build and Run the Project
 
----
-./mvnw spring-boot:run
----
 
-or
-- Run the project (by running the main method in ECommerceApplication.java)
+- Run the project (by running the main method in [ECommerceApplication.java](src/main/java/com/E_commerce/ECommerceApplication.java))
 
 #  API Testing with Postman
-A Postman collection is included in the project:
-    postman/FINAl_E-commerce.postman_collection.json
+- A Postman collection is included in the project:
+  [E-commerce.postman_collection_files](../../Downloads/E-commerce.postman_collection_files)
+
 
 To Use:
-Open Postman
+- Open Postman
+- Import the collection JSON :- [E-commerce.postman_collection_files](../../Downloads/E-commerce.postman_collection_files)
 
-Import the collection JSON
+- Use preconfigured requests for registration, login, products, and orders.
+- set this Root Endpoint - http://localhost:9090/e-commerce/ in your postman
 
-Use preconfigured requests for registration, login, products, and orders
-- http://localhost:9090/e-commerce/ in your postman
+## Endpoints Overview
 
-# Endpoints Overview
+| Method | Endpoint                                | Description              |
+|--------|-----------------------------------------|--------------------------|
+| POST   | `/e-commerce/user/register`             | Register a new user      |
+| POST   | `/e-commerce/user/login`                | Login and get JWT token  |
+| GET    | `/e-commerce/customer/getAllProducts`   | Get all products         |
+| POST   | `/e-commerce/seller/create`             | Add new product (Seller) |
+| POST   | `/e-commerce/orders/place`              | Place an order (Customer)|
 
-----------
-Method	   Endpoint                                       	Description
-POST    	/e-commerce/user/register                   	Register a new user
-POST    	/e-commerce/user/login	                      Login and get JWT token
-GET     	/e-commerce/customer/getAllProducts           Get all products
-POST    	/e-commerce/seller/create                   	Add new product (Admin)
-POST    	/e-commerce/orders/place             	        Place an order (User)
----------
+- and other endpoints or Full details of endpoints are in Postman collection.
+[E-commerce.postman_collection_files](../../Downloads/E-commerce.postman_collection_files)
 
-Full details in Postman collection.
