@@ -80,7 +80,6 @@ public class OrderService {
         Order order = orderRepository.findById(orderUpdateStatus.orderId()).orElseThrow(() -> new OrderNotFoundException("Order not found"));
 
        //admin
-
         boolean isAdmin = authentication.getAuthorities().stream()
                 .anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"));
 
@@ -89,7 +88,6 @@ public class OrderService {
         }
 
         String newStatus = orderUpdateStatus.status().toUpperCase();
-
         try {
             OrderStatus statusEnum = OrderStatus.valueOf(newStatus);
 
