@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="e8d0af9f-f50b-4122-ace6-511a72a394bc" name="Changes" comment="updated SellerController">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+=======
+    <list default="true" id="e8d0af9f-f50b-4122-ace6-511a72a394bc" name="Changes" comment="updated with README.md">
+>>>>>>> Stashed changes
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/RoleBasedController/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/RoleBasedController/AdminController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/AdminService.java" afterDir="false" />
@@ -211,6 +215,7 @@
     <MESSAGE value="modify with product" />
     <MESSAGE value="updated everything" />
     <MESSAGE value="updated SellerController" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated SellerController" />
+    <MESSAGE value="updated with README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated with README.md" />
   </component>
 </project>
