@@ -108,12 +108,11 @@ project.image=images/
 
 #  API Testing with Postman
 - A Postman collection is included in the project:
-  [E-commerce.postman_collection_files](../../Downloads/E-commerce.postman_collection_files)
-
+[E-commerce.postman_collection.json](../../Downloads/E-commerce.postman_collection.json)
 
 To Use:
 - Open Postman
-- Import the collection JSON :- [E-commerce.postman_collection_files](../../Downloads/E-commerce.postman_collection_files)
+- Import the collection JSON :-[E-commerce.postman_collection.json](../../Downloads/E-commerce.postman_collection.json)
 
 - Use preconfigured requests for registration, login, products, and orders.
 - set this Root Endpoint - http://localhost:9090/e-commerce/ in your postman
@@ -129,5 +128,5 @@ To Use:
 | POST   | `/e-commerce/orders/place`              | Place an order (Customer)|
 
 - and other endpoints or Full details of endpoints are in Postman collection.
-[E-commerce.postman_collection_files](../../Downloads/E-commerce.postman_collection_files)
+[E-commerce.postman_collection.json](../../Downloads/E-commerce.postman_collection.json)
 
