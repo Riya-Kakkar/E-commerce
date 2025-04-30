@@ -1,8 +1,6 @@
 package com.E_commerce.Service;
 
-import com.E_commerce.Config.CustomUserDetails;
 import com.E_commerce.Entity.User;
-import com.E_commerce.Helper.UnauthorizedAccessException;
 import com.E_commerce.Config.JwtTokenUtil;
 import com.E_commerce.Model.AuthRequest;
 import com.E_commerce.Model.UserDTO;
@@ -16,11 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -112,18 +106,6 @@ public class UserService {
         currentUser.setRole(userDTO.role().startsWith("ROLE_") ? userDTO.role() : "ROLE_" + userDTO.role());
         currentUser.setEnable(true);
         userRepository.save(currentUser);
-    }
-
-    public User updateUserRole(int userId, String role) {
-        if (!allowedRoles.contains(role.toUpperCase())) {
-            throw new IllegalArgumentException("Invalid role: " + role);
-        }
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        user.setRole(role.toUpperCase());
-        return userRepository.save(user);
     }
 
 

@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,9 +40,15 @@ public class AdminController {
         return userRepository.findAll();
     }
 
-    @DeleteMapping("/user/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable int id) {
-        userRepository.deleteById(id);
+    @DeleteMapping("/deleteUser")
+    public ResponseEntity<String> deleteUser(Authentication authentication){
+        String username = authentication.getName();
+
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        userRepository.deleteById(user.getId());
+
         return ResponseEntity.ok("User deleted");
     }
 
@@ -50,18 +57,10 @@ public class AdminController {
             @PathVariable int UserId,
            @Valid @RequestBody UpdateRoleRequest updateRoleRequest) {
 
-            User updatedUser = userService.updateUserRole(UserId, updateRoleRequest.role());
+            User updatedUser = adminService.updateUserRole(UserId, updateRoleRequest.role());
             return ResponseEntity.ok("User role updated to " + updatedUser.getRole());
     }
 
-
-    //for admin dashboard
-    @GetMapping("/dashboard")
-    public ResponseEntity<UserProfileDTO> getAdminDashboard(Authentication authentication) {
-        String username = authentication.getName();
-        UserProfileDTO profile = userService.getUserProfileByEmail(username);
-        return ResponseEntity.ok(profile);
-    }
 
     @GetMapping("/stats")
     public ResponseEntity<AdminDashboardDTO> getDashboardStats() {
