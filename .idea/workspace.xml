@@ -5,8 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8d0af9f-f50b-4122-ace6-511a72a394bc" name="Changes" comment="updated SellerController">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/RoleBasedController/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Controller/RoleBasedController/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/AdminService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/E_commerce/Service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/RoleBasedController/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Controller/RoleBasedController/AdminController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/AdminService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/AdminService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/E_commerce/Service/UserService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,12 +45,12 @@
     &quot;assignee&quot;: &quot;Riya-Kakkar&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Riya-Kakkar/E-commerce.git&quot;,
-    &quot;accountId&quot;: &quot;03eca734-af20-4d8c-8724-1c6ca9127317&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Riya-Kakkar/E-commerce.git",
+    "accountId": "323726be-af1a-43be-b1ef-a171aad3eba5"
   }
-}</component>
+}]]></component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>

@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "c36a1e0e-ce90-4b57-8b51-734c6b6174a9",
 		"name": "E-commerce",
-		"description": "common starting url for all are -- localhost:9090/e-commerce/\n\n```\nlocalhost:9090/e-commerce/\n\n ```",
+		"description": "root Endpoint -- localhost:9090/e-commerce/\n\n```\nlocalhost:9090/e-commerce/\n\n ```",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "43002772"
 	},
@@ -212,7 +212,7 @@
 					"response": []
 				}
 			],
-			"description": "common url for user management --- localhost:9090/e-commerce/user\n\nneeds login in ---------> get user profile , change password , update"
+			"description": "common Endpoint for user management --- localhost:9090/e-commerce/user"
 		},
 		{
 			"name": "Seller Role",
@@ -363,7 +363,7 @@
 					"response": []
 				}
 			],
-			"description": "common url for seller ----- localhost:9090/e-commerce/products/sellers"
+			"description": "common Endpoint for seller ----- localhost:9090/e-commerce/seller"
 		},
 		{
 			"name": "Customer",
@@ -429,7 +429,7 @@
 					"response": []
 				}
 			],
-			"description": "common role for customer -- localhost:9090/e-commerce/products/customers"
+			"description": "common Endpoint for customer -- localhost:9090/e-commerce/customers"
 		},
 		{
 			"name": "Cart Management",
@@ -565,7 +565,7 @@
 					"response": []
 				}
 			],
-			"description": "common url for cart -- localhost:9090/e-commerce/cart\n\n```\nlocalhost:9090/e-commerce/cart\n\n ```"
+			"description": "common Endpoint for cart -- localhost:9090/e-commerce/cart\n\n```\nlocalhost:9090/e-commerce/cart\n\n ```"
 		},
 		{
 			"name": "Order Management",
@@ -669,7 +669,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "common Endpoint for admin -- localhost:9090/e-commerce/orders"
 		},
 		{
 			"name": "Reviews & Ratings management",
@@ -818,41 +819,11 @@
 					"response": []
 				}
 			],
-			"description": "common url for review ---- localhost:9090/e-commerce/reviews"
+			"description": "common Endpoint for review ---- localhost:9090/e-commerce/reviews"
 		},
 		{
 			"name": "Admin Role",
 			"item": [
-				{
-					"name": "Admin Dashboard",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6InVzZXIxQGdtYWlsLmNvbSIsImlhdCI6MTc0NTgzNDg5NiwiZXhwIjoxNzQ1ODcwODk2fQ.wHYVwyax4UZneOVL6-rAFBXjdQXjPoR8iM8FCGGZMyg",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:9090/e-commerce/admin/dashboard",
-							"host": [
-								"localhost"
-							],
-							"port": "9090",
-							"path": [
-								"e-commerce",
-								"admin",
-								"dashboard"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "Get All Users",
 					"request": {
@@ -951,7 +922,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:9090/e-commerce/admin/user/{id}",
+							"raw": "localhost:9090/e-commerce/admin/deleteUser",
 							"host": [
 								"localhost"
 							],
@@ -959,15 +930,14 @@
 							"path": [
 								"e-commerce",
 								"admin",
-								"user",
-								"{id}"
+								"deleteUser"
 							]
 						}
 					},
 					"response": []
 				}
 			],
-			"description": "common url for admin -- localhost:9090/e-commerce/admin"
+			"description": "common Endpoint for admin -- localhost:9090/e-commerce/admin"
 		}
 	]
 }
